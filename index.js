@@ -1,4 +1,4 @@
-import pkg from './package.json' assert { type: 'json' }
+import { versionInfo } from './tools/version.js'
 export * from './apps/index.js'
 
 if (!segment.button)
@@ -6,9 +6,9 @@ if (!segment.button)
 
 if (Bot?.logger?.info) {
     Bot.logger.info('---------^_^---------')
-    Bot.logger.info(`自用插件${pkg.version}初始化~\n作者：${pkg.author}`)
+    Bot.logger.info(versionInfo.getInitMessage())
 } else {
-    console.log(`自用插件${pkg.version}初始化~\n作者：${pkg.author}`)
+    console.log(versionInfo.getInitMessage())
 }
 
 setTimeout(Index.init, 1000)
