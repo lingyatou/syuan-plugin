@@ -1,4 +1,4 @@
-import { versionInfo } from './tools/version.js'
+import { versionInfo } from './tools/index.js'
 export * from './apps/index.js'
 
 if (!segment.button)

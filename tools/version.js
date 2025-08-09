@@ -1,5 +1,8 @@
-import pkg from '../package.json' assert { type: 'json' }
-
+import fs from 'node:fs'
+import path from 'node:path'
+import { rootPath } from './path.js'
+const pkgPath = path.join(rootPath, 'package.json')
+const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
 /**
  * 项目版本信息管理
  */
