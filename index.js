@@ -12,4 +12,4 @@ if (Bot?.logger?.info) {
 }
 
 // 移除未定义的Index.init调用
-// setTimeout(Index.init, 1000)
+setTimeout(Index.init, 1000)
