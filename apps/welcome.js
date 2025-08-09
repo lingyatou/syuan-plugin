@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { rootPath, dataPath } from '../tools/path.js'
-import { cfgdata } from '../tools/cfg.js'
+import { rootPath, dataPath, cfgdata } from '../tools/index.js'
 const cfgPath = path.join(rootPath, 'lib/config/config.js')
 
 const cfg = await import(cfgPath)

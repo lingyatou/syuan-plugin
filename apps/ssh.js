@@ -1,4 +1,5 @@
 import { Client } from 'ssh2'
+import { sshData } from '../tools/index.js'
 
 export class UpdateMemeRepos extends plugin {
     constructor() {
@@ -17,6 +18,17 @@ export class UpdateMemeRepos extends plugin {
     async updateRepos(e) {
         e.reply('正在连接远程服务器，请稍等...')
 
+        // 加载SSH配置
+        const config = sshData.loadSshConfig()
+
+        // 验证配置
+        const validation = sshData.validateSshConfig(config)
+        if (!validation.isValid) {
+            e.reply(`❌ ${validation.message}`)
+            return false
+        }
+
+        const { host, port, username, password } = config
         const conn = new Client()
 
         return new Promise((resolve, reject) => {
@@ -59,10 +71,10 @@ done
                     })
                 })
             }).connect({
-                host: '43.143.104.104',
-                port: 22,
-                username: 'root',
-                password: 'Love520105' // 🔒 请替换为你的真实密码
+                host,
+                port: port || 22,
+                username,
+                password
             })
 
             conn.on('error', err => {
