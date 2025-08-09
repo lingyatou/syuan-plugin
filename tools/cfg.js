@@ -31,4 +31,4 @@ let cfgdata = {
 
 
 }
-export default cfgdata
+export { cfgdata }

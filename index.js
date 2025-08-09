@@ -1,7 +1,7 @@
 import { versionInfo } from './tools/index.js'
 export * from './apps/index.js'
 
-if (!segment.button)
+if (!segment?.button)
     segment.button = () => ""
 
 if (Bot?.logger?.info) {
@@ -11,4 +11,5 @@ if (Bot?.logger?.info) {
     console.log(versionInfo.getInitMessage())
 }
 
-setTimeout(Index.init, 1000)
+// 移除未定义的Index.init调用
+// setTimeout(Index.init, 1000)
