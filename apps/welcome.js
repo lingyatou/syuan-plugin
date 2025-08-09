@@ -4,7 +4,7 @@ import { rootPath, dataPath, cfgdata } from '../tools/index.js'
 const cfgPath = path.join(rootPath, 'lib/config/config.js')
 
 const cfg = await import(cfgPath)
-const cfgdata = cfgdata.loadCfg()
+const cfgdata1 = cfgdata.loadCfg()
 // 构建欢迎词文件路径
 const filePath = path.join(dataPath, 'welcome.json')
 let groupId;
@@ -138,10 +138,10 @@ export class WwCheck extends plugin {
     }
 }
 function isAllow(e) {
-    if (cfgdata.denylist.includes(e.group_id)) {
+    if (cfgdata1.denylist.includes(e.group_id)) {
         return false
     }
-    if (!cfgdata.denylist.includes(e.group_id)) {
+    if (!cfgdata1.denylist.includes(e.group_id)) {
         return true
     }
     return false
