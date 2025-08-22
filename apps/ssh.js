@@ -45,7 +45,7 @@ for d in */; do
     echo "跳过非Git目录: $d"
   fi
   cd ..
-done
+done &&
 
 echo "✅ 所有仓库更新完成"
 
