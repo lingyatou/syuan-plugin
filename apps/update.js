@@ -1,4 +1,5 @@
 import { rootPath, dataPath, cfgdata } from '../tools/index.js'
+import { exec } from 'child_process'
 
 
 export class Update extends plugin {
