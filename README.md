@@ -154,6 +154,10 @@ denylist: [群号3, 群号4]
 
 ## 📝 更新日志
 
+### v1.1.0
+- 加入`更新/强制更新`功能
+- 加入grasscutter控制台功能（可以发送指令）
+
 ### v1.0.0
 - ✨ 初始版本发布
 - 🔗 SSH远程仓库更新功能
@@ -182,6 +186,8 @@ denylist: [群号3, 群号4]
 
 - [Yunzai-Bot](https://github.com/TimeRainStarSky/Yunzai) - 优秀的QQ机器人框架
 - [miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) - 喵喵插件
+- [gc-opencommand-plugin](https://github.com/jie65535/gc-opencommand-plugin) - 开放GC命令执行接口插件
+- [GrasscutterCommandGenerator](https://github.com/jie65535/GrasscutterCommandGenerator) - 割草机工具
 
 ## ⚠️ 免责声明
 
