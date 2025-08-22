@@ -6,6 +6,3 @@ if (!segment?.button)
 
 logger.info('---------```````^_^```````---------')
 logger.info(versionInfo.getInitMessage())
-
-// 移除未定义的Index.init调用
-setTimeout(Index.init, 1000)
