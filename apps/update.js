@@ -1,7 +1,7 @@
 import { rootPath, dataPath, cfgdata } from '../tools/index.js'
 
 
-export class WwCheck extends plugin {
+export class Update extends plugin {
     constructor() {
         super({
             name: 'Syuan工具包',
