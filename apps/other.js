@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { pluginPath, dataPath, cfgdata } from '../tools/index.js'
+import YAML from 'yaml'
 
 // 加载配置数据
 const cfgData = cfgdata.loadCfg()
