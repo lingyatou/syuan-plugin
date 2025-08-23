@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://gitee.com/Elvin-Apocalys/pic-bed/raw/master/plugin_ico.png" alt="Plugin Icon" width="200">
+  <img src="https://gitee.com/Elvin-Apocalys/pic-bed/raw/master/1212.webp" alt="Plugin Icon" width="200">
 </div>
 
 # Syuan Plugin
