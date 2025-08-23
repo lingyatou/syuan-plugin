@@ -1,81 +1,53 @@
-# Syuan Plugin - 自用工具综合插件
+<div align="center">
+  <img src="https://gitee.com/Elvin-Apocalys/pic-bed/raw/master/plugin_ico.png" alt="Plugin Icon" width="200">
+</div>
 
-一个功能丰富的Yunzai-Bot插件，提供多种实用工具。
+# Syuan Plugin
 
-## 功能特性
+一个自用的 Yunzai-Bot 插件，提供 SSH 更新meme后端、LunaGC 服务端控制、群欢迎词管理等功能。
 
-- **SSH连接管理** - 管理SSH连接和命令执行
-- **欢迎消息设置** - 自定义群组欢迎消息
-- **Grasscutter服务器管理** - 管理游戏服务器
-- **插件自动更新** - 支持插件自动更新
-- **帮助系统** - 美观的帮助图片展示
+## 安装教程
 
-## 安装
+### 1. 克隆插件
 
-1. 将插件放置在Yunzai-Bot的plugins目录下
-2. 重启Yunzai-Bot
-3. 安装依赖：`pnpm install`
-
-## 使用方法
-
-### 帮助命令
-发送 `#sy帮助` 查看完整的帮助信息，包括：
-- 插件基本信息
-- 功能特性列表
-- 可用命令说明
-- 命令使用方法
-
-### 其他命令
-- `#ssh` - SSH连接管理
-- `#欢迎` - 欢迎消息设置
-- `#gs` - Grasscutter服务器管理
-- `#更新` - 插件更新
-
-## 帮助系统
-
-帮助系统会自动读取以下文件：
-- `resources/help/help.yaml` - 帮助信息配置
-- `resources/help/bg.jpg` - 背景图片
-- `resources/help/icon.png` - 插件图标
-
-帮助图片会自动渲染，包含：
-- 插件图标和标题
-- 版本和作者信息
-- 功能特性列表
-- 详细命令说明
-- 美观的布局设计
-
-## 配置
-
-可以通过修改 `resources/help/help.yaml` 文件来自定义帮助信息：
-
-```yaml
-title: "插件标题"
-version: "版本号"
-author: "作者名"
-description: "插件描述"
-commands:
-  - name: "命令名"
-    description: "命令描述"
-    usage: "使用方法"
-features:
-  - "功能1"
-  - "功能2"
-contact: "联系信息"
+```bash
+git clone https://github.com/lingyatou/syuan-plugin ./plugins/syuan-plugin
 ```
 
-## 依赖
+### 2. 安装依赖
 
-- axios
-- lodash
-- ssh2
-- yaml
-- canvas (用于图片渲染)
+```bash
+pnpm i
+```
 
-## 作者
+## 已实现功能
 
-源Syuan
+### 更新meme后端
+- **#memenew** - 对表情包额外仓库进行git更新（需要主人权限）
+  - 可在bot根目录下的data文件夹下的Syuan-plugin文件夹的sshInfo.json配置账号密码
+
+### LunaGC服务端控制
+- **#oc设置地址 <addr>** - 设置服务器地址（需要主人权限）
+- **#oc查询** - 查询插件是否可以连接（需要主人权限）
+- **#oc验证码 <uid>** - 向在线用户发送验证码（需要主人权限）
+- **#oc验证<token>** - 验证验证码（需要主人权限）
+- **#oc执行 <command>** - 发送指令（需要主人权限）
+
+### 其他功能
+- **#设置群欢迎词** - 设置新人入群的欢迎词
+- **#群欢迎词** - 查看各群的欢迎词
+- **#插件库** - 查看已经被收纳的插件
+
+### 更新指令
+- **#sy更新** - 更新本插件
+- **#sy强制更新** - 忽略本地改动直接同步远程仓库
+
+## 鸣谢
+
+感谢以下开源项目的支持：
+
+- [miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) - 为 Yunzai-Bot 提供优秀的插件架构参考
 
 ## 许可证
 
-ISC
+本项目采用 MIT 许可证开源。
