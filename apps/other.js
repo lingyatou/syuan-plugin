@@ -128,7 +128,7 @@ export class WwCheck extends plugin {
             data = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
         } catch (err) {
             logger.error('读取欢迎词配置失败：', err)
-            await e.reply('读取欢迎词配置失败。')
+            await e.reply('❌读取欢迎词配置失败。')
             return true
         }
         const keys = Object.keys(data)
@@ -144,16 +144,16 @@ export class WwCheck extends plugin {
 
     async getHelp(e) {
         // 读取 yaml 文件
-        const yamlPath = path.join(pluginPath, 'resoutces', 'help', 'help.yaml')
+        const yamlPath = path.join(pluginPath, 'resources', 'help', 'help.yaml')
         if (!fs.existsSync(yamlPath)) {
-            return e.reply("[Syuan-plugin] 找不到 帮助配置 文件");
+            return e.reply("❌[Syuan-plugin] 找不到 帮助配置 文件");
         }
 
         const yamlStr = fs.readFileSync(yamlPath, "utf8");
         const helpData = YAML.parse(yamlStr);
 
         if (!helpData || !helpData.helpList) {
-            return e.reply("[Syuan-plugin] 帮助配置 文件 格式错误或内容为空");
+            return e.reply("❌[Syuan-plugin] 帮助配置 文件 格式错误或内容为空");
         }
 
         // 构造转发消息节点

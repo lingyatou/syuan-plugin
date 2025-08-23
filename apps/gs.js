@@ -45,7 +45,7 @@ export class OpenCommand extends plugin {
         const cfg = loadCfg();
         cfg.host = host;
         saveCfg(cfg);
-        await e.reply(`已设置 OpenCommand 地址：${host}`);
+        await e.reply(`✅已设置 OpenCommand 地址：${host}`);
     }
 
     async setToken(e) {
@@ -53,7 +53,7 @@ export class OpenCommand extends plugin {
         const cfg = loadCfg();
         cfg.token = token;
         saveCfg(cfg);
-        await e.reply('已设置 OpenCommand Token');
+        await e.reply('✅已设置 OpenCommand Token');
     }
 
     async ping(e) {
@@ -63,7 +63,7 @@ export class OpenCommand extends plugin {
             const ver = await ocRequest(cfg.host, { token: cfg.token || '', action: 'ping', data: null });
             await e.reply(`OpenCommand 正常，版本：${ver || '未知'}`);
         } catch (err) {
-            await e.reply(`查询失败：${String(err.message || err)}`);
+            await e.reply(`❌查询失败：${String(err.message || err)}`);
         }
     }
 
@@ -75,9 +75,9 @@ export class OpenCommand extends plugin {
             const token = await ocRequest(cfg.host, { token: '', action: 'sendCode', data: uid });
             cfg.token = token;
             saveCfg(cfg);
-            await e.reply('验证码已发送，请用 #oc验证 <验证码> 完成绑定');
+            await e.reply('✅验证码已发送，请用 #oc验证 <验证码> 完成绑定');
         } catch (err) {
-            await e.reply(`发送失败：${String(err.message || err)}`);
+            await e.reply(`❌发送失败：${String(err.message || err)}`);
         }
     }
 
@@ -87,9 +87,9 @@ export class OpenCommand extends plugin {
         const code = Number(e.msg.match(/^#oc验证\s+(\d+)$/)[1]);
         try {
             await ocRequest(cfg.host, { token: cfg.token || '', action: 'verify', data: code });
-            await e.reply('验证成功，可以执行命令了');
+            await e.reply('✅验证成功，可以执行命令了');
         } catch (err) {
-            await e.reply(`验证失败：${String(err.message || err)}`);
+            await e.reply(`❌验证失败：${String(err.message || err)}`);
         }
     }
 
@@ -100,9 +100,9 @@ export class OpenCommand extends plugin {
         const cmd = e.msg.replace(/^#oc执行\s+/, '');
         try {
             const result = await ocRequest(cfg.host, { token: cfg.token, action: 'command', data: cmd });
-            await e.reply(`执行成功：\n${result || '无返回'}`);
+            await e.reply(`✅执行成功：\n${result || '无返回'}`);
         } catch (err) {
-            await e.reply(`执行失败：${String(err.message || err)}`);
+            await e.reply(`❌执行失败：${String(err.message || err)}`);
         }
     }
 }

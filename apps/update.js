@@ -25,12 +25,12 @@ export class Update extends plugin {
     async SyuanUpdate(e) {
         //使用pluginPath,在这个目录下进行git更新
         e.reply('[Syuan-plugin]开始更新插件，请稍等...')
-        exec(`git -C "${pluginPath}" pull`, (err, stdout, stderr) => {
+        exec(`git -C "${pluginPath}" pull && cd "${rootPath}" && pnpm i`, (err, stdout, stderr) => {
             if (err) {
-                e.reply('更新失败：' + err.message)
+                e.reply('❌更新失败：' + err.message)
                 return
             }
-            e.reply('更新完成！\n' + stdout || stderr)
+            e.reply('✅更新完成！\n' + stdout || stderr)
         })
     }
 
@@ -38,13 +38,14 @@ export class Update extends plugin {
         //使用pluginPath,在这个目录下进行git忽略本地改动更新
         e.reply('[Syuan-plugin]开始强制更新插件，请稍等...')
         // 强制更新会丢失本地改动
-        const cmd = `git -C "${pluginPath}" reset --hard && git -C "${pluginPath}" pull`
+        const cmd = `git -C "${pluginPath}" reset --hard && git -C "${pluginPath}" pull && cd "${rootPath}" && pnpm i
+`
         exec(cmd, (err, stdout, stderr) => {
             if (err) {
-                e.reply('强制更新失败：' + err.message)
+                e.reply('❌强制更新失败：' + err.message)
                 return
             }
-            e.reply('强制更新完成！\n' + stdout || stderr)
+            e.reply('✅强制更新完成！\n' + stdout || stderr)
         })
     }
 }
