@@ -169,7 +169,7 @@ export class WwCheck extends plugin {
             });
 
             for (let cmd of group.list) {
-                let msg = `👉 ${cmd.title}\n${cmd.desc || ""}`;
+                let msg = `${cmd.title}\n✅意义：${cmd.desc || ""}`;
                 forwardMsgs.push({
                     message: msg,
                     nickname: Bot.nickname,
