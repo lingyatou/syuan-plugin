@@ -1,0 +1,48 @@
+# 帮助菜单内容
+helpList:
+  - group: "SSH对服务器操作"
+    desc: "需要主人才能操作"
+    list:
+      - icon: 1
+        title: "#memenew"
+        desc: "对表情包额外仓库进行git更新"
+  
+  - group: "LunaGC服务端控制"
+    desc: "需要主人才能操作"
+    list:
+      - icon: 1
+        title: "#oc设置地址 <addr>"
+        desc: "设置服务器地址"
+      - icon: 1
+        title: "#oc查询"
+        desc: "查询插件是否可以连接"
+      - icon: 1
+        title: "#oc验证码 <uid>"
+        desc: "向在线用户发送验证码"
+      - icon: 1
+        title: "#oc验证<token>"
+        desc: "验证验证码"
+      - icon: 1
+        title: "#oc执行 <command>"
+        desc: "发送指令"
+  
+  - group: "其他功能"
+    list:
+      - icon: 1
+        title: "#设置群欢迎词"
+        desc: "设置新人入群的欢迎词"
+      - icon: 1
+        title: "#群欢迎词"
+        desc: "查看各群的欢迎词"
+      - icon: 1
+        title: "#插件库"
+        desc: "查看已经被收纳的插件"
+  
+  - group: "更新指令"
+    list:
+      - icon: 1
+        title: "#sy更新"
+        desc: "更新本插件"
+      - icon: 1
+        title: "#sy强制更新"
+        desc: "忽略本地改动直接同步远程仓库"
