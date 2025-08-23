@@ -32,15 +32,15 @@ export class UpdateMemeRepos extends plugin {
             conn.on('ready', () => {
                 e.reply('✅ SSH连接成功，正在更新仓库...')
 
-                // 更新仓库 + 重启 systemd 服务
+                // 更新仓库 + 重启 systemd 服务（只输出仓库名）
                 const cmd = `
 cd /root/meme-data/memes &&
 for d in */; do
   cd "$d" &&
   if [ -d ".git" ]; then
-    echo "更新仓库: $d" &&
-    git fetch --all &&
-    git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
+    git fetch --all >/dev/null 2>&1 &&
+    git reset --hard origin/$(git rev-parse --abbrev-ref HEAD) >/dev/null 2>&1 &&
+    echo "✅ 已更新仓库: $d"
   else
     echo "跳过非Git目录: $d"
   fi
@@ -50,8 +50,8 @@ done &&
 echo "✅ 所有仓库更新完成"
 
 # 重启 systemd 服务
-sudo systemctl restart meme_generator.service
-echo "🚀 meme_generator.service 已重启"
+sudo systemctl restart meme_generator.service >/dev/null 2>&1 &&
+echo "✅ meme_generator.service 已重启"
 `
 
                 conn.exec(cmd, { pty: true }, (err, stream) => {
