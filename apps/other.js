@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { rootPath, dataPath, cfgdata } from '../tools/index.js'
+import { pluginPath, dataPath, cfgdata } from '../tools/index.js'
 
 // 加载配置数据
 const cfgData = cfgdata.loadCfg()
@@ -27,6 +27,10 @@ export class WwCheck extends plugin {
                 {
                     reg: '^#群欢迎词',
                     fnc: 'getGroupWelcome'
+                },
+                {
+                    reg: '^#sy帮助',
+                    fnc: 'getHelp'
                 }
             ]
         })
@@ -136,6 +140,52 @@ export class WwCheck extends plugin {
         await e.reply(msg)
         return true
     }
+
+
+    async getHelp(e) {
+        // 读取 yaml 文件
+        const yamlPath = path.join(pluginPath, 'resoutces', 'help', 'help.yaml')
+        if (!fs.existsSync(yamlPath)) {
+            return e.reply("[Syuan-plugin] 找不到 帮助配置 文件");
+        }
+
+        const yamlStr = fs.readFileSync(yamlPath, "utf8");
+        const helpData = YAML.parse(yamlStr);
+
+        if (!helpData || !helpData.helpList) {
+            return e.reply("[Syuan-plugin] 帮助配置 文件 格式错误或内容为空");
+        }
+
+        // 构造转发消息节点
+        let forwardMsgs = [];
+        for (let group of helpData.helpList) {
+            let header = `📖【${group.group}】`;
+            if (group.desc) header += `\n${group.desc}`;
+            forwardMsgs.push({
+                message: header,
+                nickname: Bot.nickname,
+                user_id: Bot.uin,
+            });
+
+            for (let cmd of group.list) {
+                let msg = `👉 ${cmd.title}\n${cmd.desc || ""}`;
+                forwardMsgs.push({
+                    message: msg,
+                    nickname: Bot.nickname,
+                    user_id: Bot.uin,
+                });
+            }
+        }
+
+        // 发送转发消息
+        if (e.isGroup) {
+            await e.reply(await e.group.makeForwardMsg(forwardMsgs));
+        } else {
+            await e.reply(await e.friend.makeForwardMsg(forwardMsgs));
+        }
+        return true;
+    }
+
 }
 function isAllow(e) {
     if (cfgData.denylist && cfgData.denylist.includes(e.group_id)) {

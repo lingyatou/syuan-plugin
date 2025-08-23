@@ -1,5 +1,5 @@
 import { UpdateMemeRepos } from './ssh.js'
-import { WwCheck } from './welcome.js'
+import { WwCheck } from './other.js'
 import { OpenCommand } from './gs.js'
 import { Update } from './update.js'
 
