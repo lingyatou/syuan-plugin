@@ -1,5 +1,5 @@
 import { Client } from 'ssh2'
-import { sshData } from '../tools/index.js'
+import { sshData, isMaster } from '../tools/index.js'
 
 export class UpdateMemeRepos extends plugin {
     constructor() {
@@ -16,6 +16,10 @@ export class UpdateMemeRepos extends plugin {
     }
 
     async updateRepos(e) {
+        if (isMaster(e.self_id, e.user_id)) {
+            e.reply('[Syuan-plugin]表情服务更新：仅主人可用')
+            return
+        }
         e.reply('正在连接远程服务器，请稍等...')
 
         const config = sshData.loadSshConfig()
