@@ -5,4 +5,6 @@ if (!segment?.button)
     segment.button = () => ""
 
 logger.info('---------```````^_^```````---------')
-logger.info(versionInfo.getInitMessage())
+logger.info(versionInfo.getProjectName() + versionInfo.getVersion())
+logger.info(versionInfo.getAuthor())
+logger.info(versionInfo.getDescription())
