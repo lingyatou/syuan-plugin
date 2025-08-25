@@ -61,7 +61,7 @@ export class OpenCommand extends plugin {
         if (!cfg.host) return e.reply('请先 #oc设置地址 http://ip:port');
         try {
             const ver = await ocRequest(cfg.host, { token: cfg.token || '', action: 'ping', data: null });
-            await e.reply(`OpenCommand 正常，版本：${ver || '未知'}`);
+            await e.reply(`服务器运行正常，OpenCommand 正常，版本：${ver || '未知'}`);
         } catch (err) {
             await e.reply(`❌查询失败：${String(err.message || err)}`);
         }
