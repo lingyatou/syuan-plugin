@@ -1,6 +1,6 @@
 
 import { rootPath } from '../tools/path.js'
-
+import path from 'path'
 const common = await import(path.join(rootPath, "lib/common/common.js"));
 
 export class TestPlugin extends plugin {
