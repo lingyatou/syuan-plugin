@@ -19,7 +19,7 @@ export function isMaster(botId, userId) {
     for (const item of masters) {
         // item 是 "2239841632:2331329306" 这种字符串
         const [b, u] = item.split(':')
-        if (b === botId && u === userId) {
+        if (String(b) === String(botId) && String(u) === String(userId)) {
             return true
         }
     }
