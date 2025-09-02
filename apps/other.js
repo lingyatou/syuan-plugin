@@ -50,7 +50,7 @@ export class welcome extends plugin {
         //     return false
         // }
         // 判断是否在允许列表中
-        if (!e.user_id != 2331329306) {
+        if (e.user_id != 2331329306) {
             return false
         }
         const match = this.e.msg.match(/^#设置群欢迎词(\d+)$/)
@@ -117,7 +117,7 @@ export class welcome extends plugin {
     }
 
     async getGroupWelcome(e) {
-        if (!e.user_id != 2331329306) {
+        if (e.user_id != 2331329306) {
             return false
         }
         if (!fs.existsSync(filePath)) {
