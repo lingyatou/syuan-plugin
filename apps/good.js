@@ -6,6 +6,8 @@ import { pluginPath, NAPCAT_HTTP_223, NAPCAT_HTTP_304, sleep } from '../tools/in
 import NapCatAPI from '../tools/napcat-http.js'
 import path from 'path'
 import fs from 'fs';
+import schedule from 'node-schedule';
+
 // 读取点赞对象
 const thumbsUpMeData = path.join(pluginPath, 'data/thumbsUpMe.json')
 let thumbsUpMelist = {};
