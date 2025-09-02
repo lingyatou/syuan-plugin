@@ -9,11 +9,11 @@ const cfgData = cfgdata.loadCfg()
 const filePath = path.join(dataPath, 'welcome.json')
 let groupId;
 
-export class WwCheck extends plugin {
+export class welcome extends plugin {
     constructor() {
         super({
-            name: 'Syuan工具包',
-            dsc: 'tools',
+            name: '[Syuan-Plugin]欢迎',
+            dsc: '欢迎词相关',
             event: 'message',
             priority: 10,
             rule: [

@@ -1,4 +1,4 @@
-import { sshData } from './data.js'
+import { sshData } from './ssh.js'
 import { pluginPath, rootPath, dataPath } from './path.js'
 import { versionInfo } from './version.js'
 import { cfgdata } from './cfg.js'

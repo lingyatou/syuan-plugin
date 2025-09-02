@@ -4,7 +4,7 @@ import { sshData, isMaster } from '../tools/index.js'
 export class UpdateMemeRepos extends plugin {
     constructor() {
         super({
-            name: 'Syuan工具包',
+            name: '[Syuan-Plugin]更新表情包',
             dsc: '通过SSH密码连接远程服务器更新所有meme仓库并重启 systemd 服务',
             event: 'message',
             priority: 50,

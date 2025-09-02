@@ -1,8 +1,8 @@
 
 import { rootPath } from '../tools/path.js'
+// 关键词回复
+export class keyword extends plugin {
 
-export class TestPlugin extends plugin {
-    //别人的，放这里蹭一下路径定位
     constructor() {
         super({
             name: '猪鼻',

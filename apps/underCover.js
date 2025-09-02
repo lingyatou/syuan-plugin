@@ -6,7 +6,7 @@ const wordsData = path.join(pluginPath, 'data/UnderCover.json')
 export class Undercover extends plugin {
     constructor() {
         super({
-            name: '谁是卧底',
+            name: '[Syuan-Plugin]谁是卧底',
             dsc: '群内卧底小游戏',
             event: 'message.group',
             priority: 500,

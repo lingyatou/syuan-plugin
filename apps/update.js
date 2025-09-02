@@ -5,7 +5,7 @@ import { exec } from 'child_process'
 export class Update extends plugin {
     constructor() {
         super({
-            name: 'Syuan工具包',
+            name: '[Syuan-Plugin]更新',
             dsc: 'tools',
             event: 'message',
             priority: 10,

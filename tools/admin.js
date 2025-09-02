@@ -9,7 +9,7 @@ const file = fs.readFileSync(configPath, 'utf8')
 const config = YAML.parse(file)
 
 /**
- * 判断某个用户是否是指定bot的主人
+ * 判断某个用户是否是指定bot的主人，仅适用TRSS-Yunzai
  * @param {string} botId - 机器人ID
  * @param {string} userId - 用户ID
  * @returns {boolean} 是否是主人

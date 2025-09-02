@@ -8,6 +8,13 @@ import path from 'path'
 import fs from 'fs';
 import schedule from 'node-schedule';
 
+
+/** 自动点赞续火列表
+* @push 是否开启点赞消息推送
+* @hitokoto 是否开启推送一言
+*/
+
+
 // 读取点赞对象
 const thumbsUpMeData = path.join(pluginPath, 'data/thumbsUpMe.json')
 let thumbsUpMelist = {};
@@ -46,8 +53,8 @@ function time() {
 export class Good extends plugin {
     constructor() {
         super({
-            name: '猪鼻',
-            dsc: '铸币',
+            name: '[Syuan-Plugin]点赞',
+            dsc: '可以定时点赞',
             event: 'message',
             priority: 500,
             rule: [

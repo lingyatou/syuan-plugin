@@ -67,6 +67,20 @@ const NapCatAPI = {
         }
     },
 
+    /**
+ * 给指定 QQ 用户发送“戳一戳”
+ * 
+ * @async
+ * @function sendPoke
+ * @param {string} url - NapCat API 地址，例如 "http://127.0.0.1:3000"
+ * @param {string|number} groupid - 来源群号
+ * @param {string|number} userid - 被戳的 QQ
+ * @returns {Promise<Object>} NapCat API 返回的数据对象
+ * @throws {Error} 如果请求失败会抛出异常
+ * 
+ * @example
+ * await sendPoke("http://127.0.0.1:3000", 790514019, 1284508970);
+ */
     async sendPoke(url, groupid, userid) {
         try {
             const data = {
