@@ -29,7 +29,7 @@ export class test extends plugin {
                 }
             ]
         })
-        e.reply(callNapcat('/send_private_msg', {
+        e.reply(callNapcat('send_private_msg', {
             data: data
         }))
     }
