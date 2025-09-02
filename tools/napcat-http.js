@@ -65,9 +65,25 @@ const NapCatAPI = {
             logger.error(`[Syuan-Plugin] 为 ${uid} 点赞失败: ${error}`);
             throw error;
         }
+    },
+
+    async sendPoke(url, groupid, userid) {
+        try {
+            const data = {
+                user_id: userid,
+                group_id: groupid
+            };
+
+            const response = await axios.post(`${url}/send_poke`, data, {
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            return response.data;
+        } catch (error) {
+            logger.error(`[Syuan-Plugin] 为 ${uid} 戳失败: ${error}`);
+            throw error;
+        }
     }
-
-
 
 
 
