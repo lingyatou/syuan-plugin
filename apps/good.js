@@ -21,27 +21,27 @@ try {
 /** 点赞次数，非会员10次，会员20次 */
 const thumbsUpMe_sum = 10
 
-const say = time() + "已给你点赞" + thumbsUpMe_sum + "次哦"
+const say = time() + ",已给你点赞" + thumbsUpMe_sum + "次哦"
 
 function time() {
     const now = new Date();
     const hour = now.getHours(); // 0~23 的数字
-    if (0 <= hour <= 5) {
-        return "碗尚豪小猫娘"
-    }
-    else if (5 < hour <= 8) {
-        return "枣尚豪小猫娘"
-    } else if (8 < hour <= 11) {
-        return "尚唔豪小猫娘"
-    } else if (11 < hour <= 14) {
-        return "中唔豪小猫娘"
-    } else if (14 < hour <= 17) {
-        return "虾呜豪小猫娘"
-    } else if (17 < hour <= 23) {
-        return "碗尚豪小猫娘"
-    }
 
+    if (0 <= hour && hour <= 5) {
+        return "碗尚豪小猫娘";
+    } else if (6 <= hour && hour <= 8) {
+        return "枣尚豪小猫娘";
+    } else if (9 <= hour && hour <= 11) {
+        return "尚唔豪小猫娘";
+    } else if (12 <= hour && hour <= 14) {
+        return "中唔豪小猫娘";
+    } else if (15 <= hour && hour <= 17) {
+        return "虾呜豪小猫娘";
+    } else if (18 <= hour && hour <= 23) {
+        return "碗尚豪小猫娘";
+    }
 }
+
 
 export class Good extends plugin {
     constructor() {
@@ -54,10 +54,6 @@ export class Good extends plugin {
                 {
                     reg: '#赞我',
                     fnc: 'thumbsUpMe'
-                },
-                {
-                    reg: '#测试',
-                    fnc: 'test'
                 }
             ]
         })
@@ -72,22 +68,6 @@ export class Good extends plugin {
         return true
     }
 
-    async test() {
-        for (let qq of Object.keys(thumbsUpMelist)) {
-            await NapCatAPI.thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
-            await sleep(2000)
-            await NapCatAPI.thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
-            logger.mark(`[Syuan-Plugin][自动点赞] 已给QQ${qq}点赞${thumbsUpMe_sum}次`)
-            if (thumbsUpMelist[qq].push) {
-                NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_223, qq, thumbsUpMelist[qq].group, say)
-                await sleep(2000)
-                NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_304, qq, thumbsUpMelist[qq].group, say)
-                await sleep(2000)
-            }
-            await sleep(8000) // 等8秒在下一个
-        }
-    }
-
 
 }
 
@@ -100,9 +80,9 @@ export class Good extends plugin {
 */
 schedule.scheduleJob('00 00 10 * * *', async () => {
     for (let qq of Object.keys(thumbsUpMelist)) {
-        await thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
+        await NapCatAPI.thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
         await sleep(2000)
-        await thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
+        await NapCatAPI.thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
         logger.mark(`[Syuan-Plugin][自动点赞] 已给QQ${qq}点赞${thumbsUpMe_sum}次`)
         if (thumbsUpMelist[qq].push) {
             NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_223, qq, thumbsUpMelist[qq].group, say)
