@@ -15,7 +15,7 @@ export class keyword extends plugin {
                     fnc: 'six'
                 },
                 {
-                    reg: '哈气',
+                    reg: '^哈气$',
                     fnc: 'haqi'
                 },
                 {
