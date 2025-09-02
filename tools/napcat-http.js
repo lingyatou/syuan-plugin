@@ -10,10 +10,10 @@ const napcatUrl = 'http://127.0.0.1:3000'
 export async function callNapcat(api, data) {
     try {
         const res = await axios.post(`${napcatUrl}/${api}`, data)
-        return
+        return "调用成功"
     } catch (err) {
         logger.error(`[Napcat API 调用失败] ${api}`, err.message)
-        return
+        return "Napcat API 调用失败"
     }
 }
 
