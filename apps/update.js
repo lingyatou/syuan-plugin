@@ -11,11 +11,11 @@ export class Update extends plugin {
             priority: 10,
             rule: [
                 {
-                    reg: '^#sy更新$',
+                    reg: '^#syuan更新$',
                     fnc: 'SyuanUpdate'
                 },
                 {
-                    reg: '^#sy强制更新$',
+                    reg: '^#syuan强制更新$',
                     fnc: 'SyuanForceUpdate'
                 }
             ]

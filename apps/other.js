@@ -30,7 +30,7 @@ export class WwCheck extends plugin {
                     fnc: 'getGroupWelcome'
                 },
                 {
-                    reg: '^#sy帮助',
+                    reg: '^#syuan帮助',
                     fnc: 'getHelp'
                 }
             ]
