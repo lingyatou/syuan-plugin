@@ -25,3 +25,12 @@ export function isMaster(botId, userId) {
     }
     return false
 }
+
+/**
+ * 延时函数，返回一个在指定毫秒后完成的 Promise
+ * @param {number} ms - 延时时间（毫秒）
+ * @returns {Promise<void>} 延时完成的 Promise
+ */
+export function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}

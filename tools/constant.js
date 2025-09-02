@@ -1,0 +1,4 @@
+const NAPCAT_HTTP_223 = "http://127.0.0.1:3000";
+const NAPCAT_HTTP_304 = "http://43.143.104.104:3001";
+
+exports = { NAPCAT_HTTP_223, NAPCAT_HTTP_304 };
