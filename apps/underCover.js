@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { pluginPath } from '../tools/index'
+import { pluginPath } from '../tools/index.js'
 import path from 'path'
 let game = {}
 const wordsData = path.join(pluginPath, 'data/UnderCover.json')
