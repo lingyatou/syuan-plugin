@@ -74,9 +74,9 @@ export class Good extends plugin {
 
     async test() {
         for (let qq of Object.keys(thumbsUpMelist)) {
-            await thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
+            await NapCatAPI.thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
             await sleep(2000)
-            await thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
+            await NapCatAPI.thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
             logger.mark(`[Syuan-Plugin][自动点赞] 已给QQ${qq}点赞${thumbsUpMe_sum}次`)
             if (thumbsUpMelist[qq].push) {
                 NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_223, qq, thumbsUpMelist[group], say)
