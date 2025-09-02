@@ -38,6 +38,26 @@ helpList:
         title: "#插件库"
         desc: "查看已经被收纳的插件"
   
+  - group: "谁是卧底"
+    list:
+      - icon: 1
+        title: "#卧底开始"
+        desc: "开启一个游戏"
+      - icon: 1
+        title: "#加入卧底"
+        desc: "加入游戏"
+      - icon: 1
+        title: "#发词"
+        desc: "开始游戏"
+      - icon: 1
+        title: "#发词"
+        desc: "开始游戏"
+      - icon: 1
+        title: "#投票"
+        desc: "投票选择出局"
+      - icon: 1
+        title: "#结束卧底"
+        desc: "结束游戏"
   - group: "更新指令"
     list:
       - icon: 1

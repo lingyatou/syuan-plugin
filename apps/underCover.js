@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { pluginPath } from '../tools/index.js'
+import { isMaster, pluginPath } from '../tools/index.js'
 import path from 'path'
 let game = {}
 const wordsData = path.join(pluginPath, 'data/UnderCover.json')
@@ -14,7 +14,8 @@ export class Undercover extends plugin {
                 { reg: '^#卧底开始$', fnc: 'start' },
                 { reg: '^#加入卧底$', fnc: 'join' },
                 { reg: '^#发词$', fnc: 'sendWords' },
-                { reg: '^#投票.*$', fnc: 'vote' }
+                { reg: '^#投票.*$', fnc: 'vote' },
+                { reg: '^#结束卧底$', fnc: 'end' }
             ]
         })
     }
@@ -100,5 +101,16 @@ export class Undercover extends plugin {
                 e.reply(`第 ${g.round} 轮开始，请继续描述。`)
             }
         }
+    }
+
+    async end(e) {
+        if (!isMaster(e.self_id, e.user_id)) {
+            e.reply('仅主人能够强制结束')
+            return
+        }
+        let g = game[e.group_id]
+        if (!g) return e.reply('本群没有正在进行的《谁是卧底》游戏')
+        delete game[e.group_id]
+        e.reply('游戏已被强制结束。')
     }
 }
