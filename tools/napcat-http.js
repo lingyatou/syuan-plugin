@@ -66,6 +66,12 @@ const NapCatAPI = {
             throw error;
         }
     }
+
+
+
+
+
+
 };
 
 // 统一导出

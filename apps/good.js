@@ -2,9 +2,9 @@
 * 点赞功能
 * NAPCAT_HTTP_223和NAPCAT_HTTP_304是url常量在tools/constant.js
 */
-import { pluginPath, NAPCAT_HTTP_223, NAPCAT_HTTP_304, sleep, NapCatAPI } from '../tools/index.js'
+import { pluginPath, NAPCAT_HTTP_223, NAPCAT_HTTP_304, sleep } from '../tools/index.js'
+import NapCatAPI from '../tools/napcat-http.js'
 import path from 'path'
-import axios from 'axios';
 
 // 读取点赞对象
 const thumbsUpMeData = path.join(pluginPath, 'data/thumbsUpMe.json')
