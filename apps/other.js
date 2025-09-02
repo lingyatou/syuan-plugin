@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { pluginPath, dataPath, cfgdata } from '../tools/index.js'
+import { pluginPath, dataPath, cfgdata, isMaster } from '../tools/index.js'
 import YAML from 'yaml'
 
 // 加载配置数据
@@ -50,7 +50,7 @@ export class welcome extends plugin {
         //     return false
         // }
         // 判断是否在允许列表中
-        if (!isAllow(e)) {
+        if (!e.user_id != 2331329306) {
             return false
         }
         const match = this.e.msg.match(/^#设置群欢迎词(\d+)$/)
@@ -117,7 +117,7 @@ export class welcome extends plugin {
     }
 
     async getGroupWelcome(e) {
-        if (!isAllow(e)) {
+        if (!e.user_id != 2331329306) {
             return false
         }
         if (!fs.existsSync(filePath)) {
