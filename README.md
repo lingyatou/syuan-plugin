@@ -2,52 +2,158 @@
   <img src="https://gitee.com/Elvin-Apocalys/pic-bed/raw/master/1212.webp" alt="Plugin Icon" width="200">
 </div>
 
-# Syuan Plugin
+## Syuan Plugin
 
-一个自用的 Yunzai-Bot 插件，提供 SSH 更新meme后端、LunaGC 服务端控制、群欢迎词管理等功能。
+自用工具综合插件，适用于 Yunzai/NapCat 生态，用于提供常用运维、小功能与游戏等一体化能力。
 
-## 安装教程
+- **名称**: syuan-plugin
+- **版本**: v1.1.3
+- **作者**: 源Syuan
+- **许可**: ISC
 
-### 1. 克隆插件
+### 功能总览
 
+- **更新管理**
+  - `#syuan更新`：拉取插件更新并安装依赖
+  - `#syuan强制更新`：丢弃本地改动后强制更新
+- **服务器运维（SSH）**
+  - `#memenew`：SSH 连接远程服务器，批量更新表情包仓库并重启 `meme_generator.service`
+- **Grasscutter OpenCommand**
+  - `#oc设置地址 <addr>`：设置 OpenCommand 服务地址
+  - `#oc设置token <token>`：手动设置 Token
+  - `#oc查询`：检查服务连通性
+  - `#oc验证码 <uid>`：向在线 UID 发送验证码并保存 Token
+  - `#oc验证 <code>`：验证验证码
+  - `#oc执行 <command>`：远程执行指令
+- **欢迎与帮助**
+  - `#设置群欢迎词`：为当前群（或指定群号）设置欢迎词
+  - `#群欢迎词`：查看所有已设置的欢迎词
+  - `#插件库`：返回插件库地址
+  - `#syuan帮助`：发送内置帮助菜单
+- **关键词回复**（示例）
+  - 发送 `6`、包含“哈气”、或匹配“`小土豆|土豆雷|土豆地雷|i柯TV|i柯tv|iktv`”触发相应回复/图片
+- **谁是卧底**（基础指令）
+  - `#卧底开始`、`#加入卧底`、`#发词`、`#投票`、`#结束卧底`
+
+部分指令仅限“主人”使用，权限由 `tools/admin.js` 中的逻辑判定（如 `isMaster`）。
+
+### 运行环境
+
+- Node.js 18+（ESM 模块）
+- pnpm（packageManager: `pnpm@10.7.1`）
+- 适配 Yunzai/NapCat 运行环境（具备 `plugin` 基类与消息事件 `e`）
+
+### 安装与升级
+
+1) 将本项目放置在 Yunzai 根目录的 `plugins/` 下（例如：`plugins/Syuan-plugin/`）。
 ```bash
 git clone https://github.com/lingyatou/syuan-plugin ./plugins/syuan-plugin
 ```
-
-### 2. 安装依赖
+2) 在 Yunzai 根目录执行依赖安装：
 
 ```bash
 pnpm i
 ```
 
-## 已实现功能
+3) 启动/重启 Yunzai；插件加载时会输出项目名称、版本与作者信息。
 
-### 更新meme后端
-- **#memenew** - 对表情包额外仓库进行git更新（需要主人权限）
-  - 可在bot根目录下的data文件夹下的Syuan-plugin文件夹的sshInfo.json配置账号密码
+升级建议通过指令在群内执行：
 
-### LunaGC服务端控制
-- **#oc设置地址 <addr>** - 设置服务器地址（需要主人权限）
-- **#oc查询** - 查询插件是否可以连接（需要主人权限）
-- **#oc验证码 <uid>** - 向在线用户发送验证码（需要主人权限）
-- **#oc验证<token>** - 验证验证码（需要主人权限）
-- **#oc执行 <command>** - 发送指令（需要主人权限）
+- 常规更新：`#syuan更新`
+- 强制更新：`#syuan强制更新`
 
-### 其他功能
-- **#设置群欢迎词** - 设置新人入群的欢迎词
-- **#群欢迎词** - 查看各群的欢迎词
-- **#插件库** - 查看已经被收纳的插件
+### 配置
 
-### 更新指令
-- **#sy更新** - 更新本插件
-- **#sy强制更新** - 忽略本地改动直接同步远程仓库
+#### 1. 全局配置（YAML）
 
-## 鸣谢
+- 文件：`config/cfg.yaml`
+- 字段：
+  - `allowlist`: 允许生效的群号列表（为空则默认允许）
+  - `denylist`: 禁止生效的群号列表
 
-感谢以下开源项目的支持：
+示例：
 
-- [miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) - 为 Yunzai-Bot 提供优秀的插件架构参考
+```yaml
+#allowlist: [12345,12346]
+denylist: [12345,12346]
+```
 
-## 许可证
+#### 2. 数据目录与文件
 
-本项目采用 MIT 许可证开源。
+插件会在 Yunzai 根目录下创建数据目录：`data/Syuan-plugin/`
+
+- `sshInfo.json`：SSH 连接配置
+  - 字段：`host`、`port`、`username`、`password`、`description`
+  - 可通过 `#memenew` 前置校验，缺失字段会提示不完整
+- `opencommand.json`：OpenCommand 服务配置
+  - 字段：`host`、`token`（通过 `#oc验证码`/`#oc验证` 自动写入或手动设置）
+- `welcome.json`：群欢迎词配置
+  - 调用 `#设置群欢迎词` 自动写入；`#群欢迎词` 查看
+
+资源目录：`resources/help/` 存放帮助菜单 YAML 与图片资源。
+
+### 使用说明（节选）
+
+#### SSH 更新表情服务
+
+1) 在私有环境准备 SSH 账号；在首次运行或 `sshInfo.json` 不存在时，会生成默认模板。
+2) 填写 `data/Syuan-plugin/sshInfo.json` 必填字段：`host`、`username`、`password`（`port` 默认 22）。
+3) 在群内发送 `#memenew` 开始执行：
+   - 批量 `git fetch/reset` 所有表情包仓库
+   - 完成后重启 `meme_generator.service`
+
+仅主人可用（根据 `isMaster` 判定）。
+
+#### Grasscutter OpenCommand
+
+1) `#oc设置地址 http://ip:port`
+2) 绑定方式二选一：
+   - 验证流程：`#oc验证码 <UID>` → `#oc验证 <验证码>`
+   - 直接设置：`#oc设置token <token>`
+3) `#oc查询` 检查连通性；`#oc执行 <command>` 远程执行。
+
+#### 欢迎词与帮助
+
+- `#设置群欢迎词`：为当前群（或在命令后附加纯数字群号）设置欢迎词。
+- `#群欢迎词`：查看所有已设置的欢迎词。
+- `#syuan帮助`：根据 `resources/help/help.yaml` 生成转发帮助消息。
+
+#### 关键词回复与图片素材
+
+- 关键词见 `apps/keyword.js`；需要在 `resources/img/` 放置对应图片，例如：
+  - `resources/img/fbhq.jpg`
+  - `resources/img/xtd.jpg`
+
+### 目录结构（关键）
+
+- `apps/`：功能模块（指令）集合
+- `tools/`：路径、版本、配置、SSH、NapCat HTTP 等工具
+- `config/`：插件 YAML 配置
+- `resources/`：帮助与图片资源
+- `data/`：运行期生成/持久化数据（位于 Yunzai 根目录）
+
+### 开发指引
+
+1) 在 `apps/` 新增模块（继承 `plugin`，编写 `rule` 与处理函数）。
+2) 在 `apps/index.js` 中导出并加入默认导出数组，以便插件框架加载。
+3) 可使用 `tools/` 中的工具方法：
+   - `pluginPath`、`rootPath`、`dataPath`
+   - `cfgdata`（读写 `config/cfg.yaml`）
+   - `sshData`（读写/校验 `sshInfo.json`）
+   - `versionInfo`（读取 `package.json` 元信息）
+
+### 常见问题
+
+- 指令提示“仅主人可用”/无响应：检查主人判定与群号是否在 `denylist`。
+- `#memenew` 执行失败：核对 `sshInfo.json`，以及服务器是否具备 git 与 systemd 权限。
+- OpenCommand 失败：确认服务端插件与接口可用，`host/token` 正确配置。
+
+### 鸣谢
+
+- [miao-plugin](https://github.com/yoimiya-kokomi/miao-plugin) — 优秀的 Yunzai-Bot 插件架构参考。
+
+### 许可证
+
+本项目使用 ISC 许可证发布。
+
+
