@@ -94,7 +94,7 @@ const NapCatAPI = {
 
             return response.data;
         } catch (error) {
-            logger.error(`[Syuan-Plugin] 为 ${uid} 戳失败: ${error}`);
+            logger.error(`[Syuan-Plugin] 为 ${userid} 戳失败: ${error}`);
             throw error;
         }
     }
