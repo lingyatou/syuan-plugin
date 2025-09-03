@@ -16,7 +16,7 @@ export class UpdateMemeRepos extends plugin {
     }
 
     async updateRepos(e) {
-        if (isMaster(e.self_id, e.user_id)) {
+        if (!isMaster(e.self_id, e.user_id)) {
             e.reply('[Syuan-plugin]表情服务更新：仅主人可用')
             return
         }
