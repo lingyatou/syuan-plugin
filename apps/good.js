@@ -67,11 +67,8 @@ export class Good extends plugin {
     }
 
     async thumbsUpMe(e) {
-        Bot.pickFriend(this.e.user_id).thumbUp(thumbsUpMe_sum)
-        e.reply([
-            segment.at(e.user_id),
-            say
-        ])
+        await NapCatAPI.thumbsUp(which(e.self_id), qq, thumbsUpMe_sum)
+        e.reply(`用户` + e.user_id + `,` + say)
         return true
     }
 
@@ -100,3 +97,12 @@ schedule.scheduleJob('00 00 10 * * *', async () => {
         await sleep(8000) // 等8秒在下一个
     }
 })
+
+function which(uid) {
+    if (String(uid) === "2239841632") {
+        return NAPCAT_HTTP_223
+    }
+    else {
+        return NAPCAT_HTTP_304
+    }
+}
