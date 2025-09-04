@@ -41,7 +41,7 @@ export class poke_to_2YM extends plugin {
         // const randFile = files[Math.floor(Math.random() * files.length)]
         // const imgPath = path.join(emojiDir, randFile)
 
-        const result = await getRandomFileUrl("the-second-feathers", "emoji-gallery")
+        const result = await getRandomFileUrl("the-second-feathers", "emoji-gallery", "master")
         const data = {
             group_id: e.group_id,  // 替换成目标群号
             message: [
