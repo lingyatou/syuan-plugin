@@ -25,8 +25,8 @@ export class poke_to_2YM extends plugin {
         })
         this.task = {
             cron: '0 30 * * * *',
-            name: '定时请求2YM的图片仓库',
-            fnc: () => saveAllImageRawUrls("the-second-feathers", "emoji-gallery", "master", urlsFile), // 指触发的函数
+            name: '定时更新2YM的图片仓库',
+            fnc: () => update(), // 指触发的函数
             log: true // 是否输出日志
         }
     }
@@ -68,4 +68,17 @@ export class poke_to_2YM extends plugin {
 }
 
 
-
+function update() {
+    const targetPath = path.join(rootPath, 'data', 'Syuan-plugin', 'Yunzai_image');
+    // 执行 git pull
+    exec('git pull', { cwd: targetPath }, (error, stdout, stderr) => {
+        if (error) {
+            logger.error(`更新失败: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            logger.error(`Git 错误: ${stderr}`);
+        }
+        logger.info(`更新成功:\n${stdout}`);
+    });
+}
