@@ -116,11 +116,8 @@ const NapCatAPI = {
   * // 发送一条群消息，包含文字和 [被踢] 表情包
   * await sendRun("http://127.0.0.1:3000", 123456789, "某人跑路了");
   */
-    async sendRun(url, g, oo) {
+    async sendRun(url, g) {
         try {
-
-            await sendGroupMsg(url, g, oo)
-
             const data = {
                 group_id: g,  // 替换成目标群号
                 message: [
