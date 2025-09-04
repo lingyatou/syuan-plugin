@@ -7,8 +7,12 @@ import { Good } from './good.js'
 import { Undercover } from './underCover.js'
 import { newcomer } from './newcomer.js'
 import { run } from './run.js'
+import { poke_to_2YM } from './poke.js'
+
 
 import { test } from './test.js'
+
+
 
 export const ssh = UpdateMemeRepos
 export const Welcome = welcome
@@ -19,6 +23,7 @@ export const good = Good
 export const underCover = Undercover
 export const Newcomer = newcomer
 export const Run = run
+export const Poke_to_2YM = poke_to_2YM
 
 // export const Test = test
 
