@@ -24,9 +24,9 @@ export class poke_to_2YM extends plugin {
             priority: 1
         })
         this.task = {
-            cron: '0 16 23 * * *',
+            cron: '0 21 23 * * *',
             name: '定时请求仓库',
-            fnc: () => saveAllRawUrls("the-second-feathers", "emoji-gallery", "master", urlsFile), // 指触发的函数
+            fnc: () => saveAllImageRawUrls("the-second-feathers", "emoji-gallery", "master", urlsFile), // 指触发的函数
             log: true // 是否输出日志
         }
     }
@@ -48,7 +48,7 @@ export class poke_to_2YM extends plugin {
         // const randFile = files[Math.floor(Math.random() * files.length)]
         // const imgPath = path.join(emojiDir, randFile)
 
-        const result = await saveAllRawUrls("the-second-feathers", "emoji-gallery", "master", urlsFile)
+        const result = await saveAllImageRawUrls("the-second-feathers", "emoji-gallery", "master", urlsFile)
         const data = {
             group_id: e.group_id,  // 替换成目标群号
             message: [
@@ -71,22 +71,21 @@ export class poke_to_2YM extends plugin {
 
 
 /**
- * 获取 Gitee 仓库里所有文件的 raw URL，并写入本地文件
+ * 获取 Gitee 仓库里所有图片文件的 raw URL，并写入本地文件
  *
  * @async
- * @function saveAllRawUrls
+ * @function saveAllImageRawUrls
  * @param {string} owner - 仓库拥有者（用户名或组织名）
  * @param {string} repo - 仓库名称
  * @param {string} [branch="master"] - 分支名（默认 master）
- * @param {string} [outputFile="raw_urls.txt"] - 输出文件路径
+ * @param {string} urlsFile - 输出文件路径
  * @returns {Promise<void>}
  *
  * @example
- * await saveAllRawUrls("the-second-feathers", "emoji-gallery", "master", "emoji_raw_urls.txt");
+ * await saveAllImageRawUrls("the-second-feathers", "emoji-gallery", "master", "emoji_raw_urls.txt");
  */
-async function saveAllRawUrls(owner, repo, branch = "master", urlsFile) {
+async function saveAllImageRawUrls(owner, repo, branch = "master", urlsFile) {
     try {
-        // 调用 Gitee API 获取文件树
         const res = await axios.get(
             `https://gitee.com/api/v5/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`,
             {
@@ -96,28 +95,28 @@ async function saveAllRawUrls(owner, repo, branch = "master", urlsFile) {
             }
         );
 
-        const files = res.data.tree
-            .filter((item) => item.type === "blob") // 只要文件
+        // 筛选图片文件
+        const imageFiles = res.data.tree
+            .filter((item) => item.type === "blob" && /\.(jpe?g|png|gif|bmp|webp)$/i.test(item.path))
             .map((item) => item.path);
 
-        if (files.length === 0) {
-            console.error(`[Syuan-Plugin] ${repo} 仓库未找到文件`);
+        if (imageFiles.length === 0) {
+            logger.error(`[Syuan-Plugin] ${repo} 仓库未找到图片文件`);
             return;
         }
 
         // 拼接 raw URL 列表
-        const rawUrls = files.map(
+        const rawUrls = imageFiles.map(
             (file) => `https://gitee.com/${owner}/${repo}/raw/${branch}/${file}`
         );
 
         // 写入文件
         fs.writeFileSync(urlsFile, rawUrls.join("\n"), "utf-8");
-        logger.info(`[Syuan-Plugin] 已保存 ${rawUrls.length} 个文件 URL`);
+        logger.info(`[Syuan-Plugin] 已保存 ${rawUrls.length} 个图片文件 URL 到 ${urlsFile}`);
     } catch (err) {
         logger.error("[Syuan-Plugin] 获取文件失败:", err.message);
     }
 }
-
 
 /**
  * 从本地 raw URL 文件随机选一个 URL
