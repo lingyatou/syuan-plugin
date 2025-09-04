@@ -67,7 +67,7 @@ export class test extends plugin {
                 }
             ]
         }
-        await NapCatAPI.sendImage(data)
+        await NapCatAPI.sendImage(which(e.self_id), data)
         sleep(1000)
         return true
     }

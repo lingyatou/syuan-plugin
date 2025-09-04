@@ -185,7 +185,7 @@ const NapCatAPI = {
         }
     },
 
-    async sendImage(data) {
+    async sendImage(url, data) {
         try {
             const response = await axios.post(`${url}/send_group_msg`, data, {
                 headers: { "Content-Type": "application/json" }
