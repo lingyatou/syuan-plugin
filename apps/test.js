@@ -39,7 +39,7 @@ export class test extends plugin {
 
     async accept(e) {
         // 仅处理戳账号3999084287的情况
-        if (e.target_id != 3999084287) return false
+        //if (e.target_id != 3999084287) return false
 
         // 表情包目录：resources/Syuan_plugin/
         const emojiDir = path.join(rootPath, 'resources/Syuan_plugin')
