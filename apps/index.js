@@ -20,6 +20,7 @@ export const underCover = Undercover
 export const Newcomer = newcomer
 export const Run = run
 
+export const Test = test
 
 
-export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run]
+export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test]

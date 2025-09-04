@@ -183,6 +183,19 @@ const NapCatAPI = {
             logger.error(`[Syuan-Plugin] 发送给群 ${groupId} 失败: ${error}`);
             throw error;
         }
+    },
+
+    async sendImage(data) {
+        try {
+            const response = await axios.post(`${url}/send_group_msg`, data, {
+                headers: { "Content-Type": "application/json" }
+            });
+
+            return response.data;
+        } catch (error) {
+            logger.error(`[Syuan-Plugin] 发送给2YM失败: ${error}`);
+            throw error;
+        }
     }
 
 
