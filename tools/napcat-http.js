@@ -97,8 +97,54 @@ const NapCatAPI = {
             logger.error(`[Syuan-Plugin] 为 ${userid} 戳失败: ${error}`);
             throw error;
         }
-    }
+    },
 
+
+    /**
+ * 发送群图片消息
+ *
+ * 使用 Napcat API 的 `/send_group_msg` 接口向指定群发送一条图片消息。
+ *
+ * @async
+ * @function send_group_msg
+ * @param {string} url - Napcat API 地址，例如 "http://127.0.0.1:3000"
+ * @param {string|number} g - 目标群号
+ * @returns {Promise<Object>} Napcat API 返回的响应对象
+ * @throws {Error} 当请求失败时抛出异常
+ *
+ * @example
+ * const res = await send_group_msg("http://127.0.0.1:3000", 123456789);
+ * console.log(res); // { status: "ok", retcode: 0, data: { message_id: 123456 } }
+ */
+    async send_group_msg(url, g) {
+        try {
+            const data = {
+                group_id: g,  // 替换成目标群号
+                message: [
+                    {
+                        type: "image",
+                        data: {
+                            file: "https://gxh.vip.qq.com/club/item/parcel/item/8e/8e362b858c6a40870486339806c07c82/raw300.gif",
+                            summary: "[被踢]",
+                            key: "97187ef7d4e9899c",
+                            emoji_id: "8e362b858c6a40870486339806c07c82",
+                            emoji_package_id: "243040"
+                        }
+                    }
+                ]
+            };
+
+
+            const response = await axios.post(url + `/send_group_msg`, data, {
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            return response.data;
+        } catch (error) {
+            logger.error(`[Syuan-Plugin] 踢出失败: ${error}`);
+            throw error;
+        }
+    }
 
 
 
