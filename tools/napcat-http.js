@@ -107,14 +107,13 @@ const NapCatAPI = {
   * @function sendRun
   * @param {string} url - Napcat HTTP API 基础地址，例如 "http://127.0.0.1:3000"
   * @param {number|string} g - 目标群号
-  * @param {string} oo - 要发送的文本内容
   * @returns {Promise<Object>} API 返回的响应数据
   *
   * @throws {Error} 当请求失败时抛出错误，并在日志中记录 `[Syuan-Plugin] 踢出失败`
   *
   * @example
   * // 发送一条群消息，包含文字和 [被踢] 表情包
-  * await sendRun("http://127.0.0.1:3000", 123456789, "某人跑路了");
+  * await sendRun("http://127.0.0.1:3000", 123456789);
   */
     async sendRun(url, g) {
         try {
