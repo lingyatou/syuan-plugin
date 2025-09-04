@@ -24,8 +24,8 @@ export class poke_to_2YM extends plugin {
             priority: 1
         })
         this.task = {
-            cron: '0 21 23 * * *',
-            name: '定时请求仓库',
+            cron: '0 30 * * * *',
+            name: '定时请求2YM的图片仓库',
             fnc: () => saveAllImageRawUrls("the-second-feathers", "emoji-gallery", "master", urlsFile), // 指触发的函数
             log: true // 是否输出日志
         }
@@ -48,14 +48,14 @@ export class poke_to_2YM extends plugin {
         // const randFile = files[Math.floor(Math.random() * files.length)]
         // const imgPath = path.join(emojiDir, randFile)
 
-        const result = await saveAllImageRawUrls("the-second-feathers", "emoji-gallery", "master", urlsFile)
+        const result = getRandomUrlFromFile()
         const data = {
             group_id: e.group_id,  // 替换成目标群号
             message: [
                 {
                     type: "image",
                     data: {
-                        file: result.rawUrl,
+                        file: result,
                         summary: "好戳！戳牢羽",
                         sub_type: "1"
                     }
@@ -102,7 +102,7 @@ async function saveAllImageRawUrls(owner, repo, branch = "master", urlsFile) {
 
         if (imageFiles.length === 0) {
             logger.error(`[Syuan-Plugin] ${repo} 仓库未找到图片文件`);
-            return;
+            return null;
         }
 
         // 拼接 raw URL 列表
@@ -120,13 +120,11 @@ async function saveAllImageRawUrls(owner, repo, branch = "master", urlsFile) {
 
 /**
  * 从本地 raw URL 文件随机选一个 URL
- *
  * @function getRandomUrlFromFile
- * @param {string} filePath - 包含 raw URL 的文件路径，每行一个 URL
  * @returns {string|null} - 随机选中的 URL，文件为空或不存在返回 null
  *
  * @example
- * const url = getRandomUrlFromFile("emoji_raw_urls.txt");
+ * const url = getRandomUrlFromFile();
  * console.log(url);
  */
 function getRandomUrlFromFile() {
