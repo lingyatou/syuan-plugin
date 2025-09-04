@@ -36,8 +36,8 @@ export class poke_to_2YM extends plugin {
         // 仅处理戳账号3999084287的情况
         if (e.target_id != 3999084287) return false
 
-        // 表情包目录：resources/Syuan_plugin/
-        const emojiDir = path.join(rootPath, 'resources/Syuan_plugin/Yunzai_image/2YM')
+        // 表情包目录：data/Syuan-plugin/Yunzai_image/2YM
+        const emojiDir = path.join(rootPath, 'data/Syuan-plugin/Yunzai_image/2YM')
         const files = fs.readdirSync(emojiDir).filter(file => /\.(jpg|png|gif)$/i.test(file))
         if (files.length === 0) {
             logger.warn('[SyuanPokeReply] 2毛目录为空')
