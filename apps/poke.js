@@ -12,6 +12,7 @@ function which(uid) {
     }
 }
 
+const urlsFile = path.join(rootPath, "data/Syuan-plugin/emoji_raw_urls.txt")
 
 
 export class poke_to_2YM extends plugin {
@@ -22,6 +23,12 @@ export class poke_to_2YM extends plugin {
             event: 'notice.group.poke',
             priority: 1
         })
+        this.task = {
+            cron: '0 13 23 * * *',
+            name: '定时请求仓库',
+            fnc: () => saveAllRawUrls("the-second-feathers", "emoji-gallery", "master"), // 指触发的函数
+            log: true // 是否输出日志
+        }
     }
 
 
@@ -41,7 +48,7 @@ export class poke_to_2YM extends plugin {
         // const randFile = files[Math.floor(Math.random() * files.length)]
         // const imgPath = path.join(emojiDir, randFile)
 
-        const result = await getRandomFileUrl("the-second-feathers", "emoji-gallery", "master")
+        const result = await saveAllRawUrls("the-second-feathers", "emoji-gallery", "master", urlsFile)
         const data = {
             group_id: e.group_id,  // 替换成目标群号
             message: [
@@ -64,27 +71,20 @@ export class poke_to_2YM extends plugin {
 
 
 /**
- * 从指定 Gitee 仓库里随机获取一个文件的路径和访问 URL
+ * 获取 Gitee 仓库里所有文件的 raw URL，并写入本地文件
  *
  * @async
- * @function getRandomFileUrl
+ * @function saveAllRawUrls
  * @param {string} owner - 仓库拥有者（用户名或组织名）
  * @param {string} repo - 仓库名称
- * @param {string} [branch="master"] - 分支名（默认 master，可改成 main 或其他分支）
- * @returns {Promise<{
- *   pageUrl: string,     // 文件在 Gitee 上的网页 URL
- *   rawUrl: string       // 文件的原始内容 URL
- * } | null>} - 成功时返回对象，失败时返回 null
+ * @param {string} [branch="master"] - 分支名（默认 master）
+ * @param {string} [outputFile="raw_urls.txt"] - 输出文件路径
+ * @returns {Promise<void>}
  *
  * @example
- * const result = await getRandomFileUrl("oschina", "git-osc");
- * if (result) {
- *   console.log("随机文件:", result.randomFile);
- *   console.log("网页 URL:", result.pageUrl);
- *   console.log("Raw  URL:", result.rawUrl);
- * }
+ * await saveAllRawUrls("the-second-feathers", "emoji-gallery", "master", "emoji_raw_urls.txt");
  */
-async function getRandomFileUrl(owner, repo, branch = "master") {
+async function saveAllRawUrls(owner, repo, branch = "master", urlsFile) {
     try {
         // 调用 Gitee API 获取文件树
         const res = await axios.get(
@@ -97,24 +97,60 @@ async function getRandomFileUrl(owner, repo, branch = "master") {
         );
 
         const files = res.data.tree
-            .filter((item) => item.type === "blob") // 只取文件
+            .filter((item) => item.type === "blob") // 只要文件
             .map((item) => item.path);
 
         if (files.length === 0) {
-            logger.error("[Syuan-Plugin]2YM仓库未找到文件");
-            e.reply("[Syuan-Plugin]2YM仓库未找到文件")
+            console.error(`[Syuan-Plugin] ${repo} 仓库未找到文件`);
+            return;
         }
 
-        // 随机选一个文件
-        const randomFile = files[Math.floor(Math.random() * files.length)];
+        // 拼接 raw URL 列表
+        const rawUrls = files.map(
+            (file) => `https://gitee.com/${owner}/${repo}/raw/${branch}/${file}`
+        );
 
-        // 拼接 URL
-        const pageUrl = `https://gitee.com/${owner}/${repo}/blob/${branch}/${randomFile}`;
-        const rawUrl = `https://gitee.com/${owner}/${repo}/raw/${branch}/${randomFile}`;
-
-        return { pageUrl, rawUrl };
+        // 写入文件
+        fs.writeFileSync(urlsFile, rawUrls.join("\n"), "utf-8");
+        logger.info(`[Syuan-Plugin] 已保存 ${rawUrls.length} 个文件 URL`);
     } catch (err) {
-        logger.error("获取文件失败:", err.message);
+        logger.error("[Syuan-Plugin] 获取文件失败:", err.message);
+    }
+}
+
+
+/**
+ * 从本地 raw URL 文件随机选一个 URL
+ *
+ * @function getRandomUrlFromFile
+ * @param {string} filePath - 包含 raw URL 的文件路径，每行一个 URL
+ * @returns {string|null} - 随机选中的 URL，文件为空或不存在返回 null
+ *
+ * @example
+ * const url = getRandomUrlFromFile("emoji_raw_urls.txt");
+ * console.log(url);
+ */
+function getRandomUrlFromFile() {
+    try {
+        if (!fs.existsSync(urlsFile)) {
+            logger.error(`[Syuan-Plugin] 文件不存在: ${urlsFile}`);
+            return null;
+        }
+
+        const lines = fs.readFileSync(urlsFile, "utf-8")
+            .split("\n")
+            .map((line) => line.trim())
+            .filter((line) => line.length > 0);
+
+        if (lines.length === 0) {
+            logger.error(`[Syuan-Plugin] 文件为空: ${urlsFile}`);
+            return null;
+        }
+
+        const randomIndex = Math.floor(Math.random() * lines.length);
+        return lines[randomIndex];
+    } catch (err) {
+        logger.error("[Syuan-Plugin] 读取文件失败:", err.message);
         return null;
     }
 }
