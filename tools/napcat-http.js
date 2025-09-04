@@ -118,14 +118,12 @@ const NapCatAPI = {
   */
     async sendRun(url, g, oo) {
         try {
+
+            await sendGroupMsg(url, g, oo)
+
             const data = {
                 group_id: g,  // 替换成目标群号
                 message: [
-                    {
-                        type: "text",
-                        data: { oo }
-
-                    },
                     {
                         type: "image",
                         data: {
@@ -147,6 +145,46 @@ const NapCatAPI = {
             return response.data;
         } catch (error) {
             logger.error(`[Syuan-Plugin] 踢出失败: ${error}`);
+            throw error;
+        }
+    },
+
+
+    /**
+ * 发送群文本消息
+ *
+ * @async
+ * @function sendGroupMsg
+ * @param {string} url - Napcat HTTP API 基础地址，例如 "http://127.0.0.1:3000"
+ * @param {string|number} groupId - 目标群号
+ * @param {string} text - 要发送的文本消息内容
+ * @returns {Promise<Object>} API 返回的响应数据
+ *
+ * @throws {Error} 当请求失败时抛出错误，并在日志中记录 `[Syuan-Plugin] 发送失败`
+ *
+ * @example
+ * // 发送一条文本消息到群 123456
+ * await sendGroupMsg("http://127.0.0.1:3000", 123456, "大家好");
+ */
+    async sendGroupMsg(url, groupId, text) {
+        try {
+            const data = {
+                group_id: String(groupId),
+                message: [
+                    {
+                        type: "text",
+                        data: { text }
+                    }
+                ]
+            };
+
+            const response = await axios.post(`${url}/send_group_msg`, data, {
+                headers: { "Content-Type": "application/json" }
+            });
+
+            return response.data;
+        } catch (error) {
+            logger.error(`[Syuan-Plugin] 发送给群 ${groupId} 失败: ${error}`);
             throw error;
         }
     }
