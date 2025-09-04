@@ -101,26 +101,31 @@ const NapCatAPI = {
 
 
     /**
- * 发送群图片消息
- *
- * 使用 Napcat API 的 `/send_group_msg` 接口向指定群发送一条图片消息。
- *
- * @async
- * @function send_group_msg
- * @param {string} url - Napcat API 地址，例如 "http://127.0.0.1:3000"
- * @param {string|number} g - 目标群号
- * @returns {Promise<Object>} Napcat API 返回的响应对象
- * @throws {Error} 当请求失败时抛出异常
- *
- * @example
- * const res = await send_group_msg("http://127.0.0.1:3000", 123456789);
- * console.log(res); // { status: "ok", retcode: 0, data: { message_id: 123456 } }
- */
-    async send_group_msg(url, g) {
+  * 发送带文本和表情包图片的群消息
+  *
+  * @async
+  * @function sendRun
+  * @param {string} url - Napcat HTTP API 基础地址，例如 "http://127.0.0.1:3000"
+  * @param {number|string} g - 目标群号
+  * @param {string} oo - 要发送的文本内容
+  * @returns {Promise<Object>} API 返回的响应数据
+  *
+  * @throws {Error} 当请求失败时抛出错误，并在日志中记录 `[Syuan-Plugin] 踢出失败`
+  *
+  * @example
+  * // 发送一条群消息，包含文字和 [被踢] 表情包
+  * await sendRun("http://127.0.0.1:3000", 123456789, "某人跑路了");
+  */
+    async sendRun(url, g, oo) {
         try {
             const data = {
                 group_id: g,  // 替换成目标群号
                 message: [
+                    {
+                        type: "text",
+                        data: { oo }
+
+                    },
                     {
                         type: "image",
                         data: {
