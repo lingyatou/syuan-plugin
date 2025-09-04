@@ -24,9 +24,9 @@ export class poke_to_2YM extends plugin {
             priority: 1
         })
         this.task = {
-            cron: '0 13 23 * * *',
+            cron: '0 16 23 * * *',
             name: '定时请求仓库',
-            fnc: () => saveAllRawUrls("the-second-feathers", "emoji-gallery", "master"), // 指触发的函数
+            fnc: () => saveAllRawUrls("the-second-feathers", "emoji-gallery", "master", urlsFile), // 指触发的函数
             log: true // 是否输出日志
         }
     }
