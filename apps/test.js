@@ -13,13 +13,27 @@ function which(uid) {
 
 
 
-export class SyuanPokeReply extends plugin {
+export class test extends plugin {
+    // constructor() {
+    //     super({
+    //         name: '戳一戳表情包回复（Syuan）',
+    //         dsc: '当戳账号3999084287时发送表情包',
+    //         event: 'notice.group.poke',
+    //         priority: 1
+    //     })
+    // }
     constructor() {
         super({
-            name: '戳一戳表情包回复（Syuan）',
-            dsc: '当戳账号3999084287时发送表情包',
-            event: 'notice.group.poke',
-            priority: 1
+            name: '[Syuan-Plugin]点赞',
+            dsc: '可以定时点赞',
+            event: 'message',
+            priority: 500,
+            rule: [
+                {
+                    reg: '#测试',
+                    fnc: 'accept'
+                }
+            ]
         })
     }
 
@@ -41,7 +55,7 @@ export class SyuanPokeReply extends plugin {
 
 
         const data = {
-            group_id: g,  // 替换成目标群号
+            group_id: e.group_id,  // 替换成目标群号
             message: [
                 {
                     type: "image",
