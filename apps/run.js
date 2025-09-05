@@ -21,7 +21,7 @@ export class run extends plugin {
         this.tips = '跑路了'
     }
 
-    async accept() {
+    async accept(e) {
         if (this.e.user_id == this.e.bot.uin) return
 
         let name, msg
