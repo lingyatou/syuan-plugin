@@ -4,7 +4,7 @@ import { NAPCAT_HTTP_223, NAPCAT_HTTP_304, sleep, rootPath } from "../tools/inde
 import axios from "axios";
 import fs from 'fs'
 import path from 'path'
-import exec from 'child_process';
+import { exec } from 'child_process';
 function which(uid) {
     if (String(uid) === "2239841632") {
         return NAPCAT_HTTP_223
