@@ -34,3 +34,33 @@ export function isMaster(botId, userId) {
 export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+
+/**
+ * 读取并解析 privacy.json 文件，返回对象
+ *
+ * @function getPrivacyData
+ * @returns {Object} 解析后的隐私数据对象
+ * - 如果文件不存在，返回空对象 {}
+ * - 如果 JSON 格式错误，返回空对象 {}
+ *
+ * @example
+ * const data = getPrivacyData();
+ * console.log(data.userId);
+ */
+export function getPrivacyData() {
+    const privacyDataPath = path.join(rootPath, "data/Syuan-plugin/privacy.json");
+
+    if (!fs.existsSync(privacyDataPath)) {
+        logger.warn("privacy.json 不存在");
+        return {}; // 建议返回空对象，而不是 undefined
+    }
+
+    try {
+        const jsonStr = fs.readFileSync(privacyDataPath, "utf8");
+        return JSON.parse(jsonStr); // 转成对象
+    } catch (err) {
+        logger.error("privacy.json 格式错误:", err);
+        return {}; // 返回空对象，避免调用方报错
+    }
+}

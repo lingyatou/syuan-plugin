@@ -2,7 +2,10 @@
 * 用于封装 NapCat 相关函数
 */
 import axios from 'axios';
+import { rootPath, privacyData } from './index.js'
+import path from 'path';
 
+const token = privacyData.NapcatToken
 const NapCatAPI = {
     /**
      * 指定用户发送私聊消息（支持临时会话）
@@ -26,7 +29,7 @@ const NapCatAPI = {
             };
 
             const response = await axios.post(`${url}/send_private_msg`, data, {
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` }
             });
 
             return response.data;
@@ -57,7 +60,7 @@ const NapCatAPI = {
             };
 
             const response = await axios.post(`${url}/send_like`, data, {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
             });
 
             return response.data;
@@ -89,7 +92,7 @@ const NapCatAPI = {
             };
 
             const response = await axios.post(`${url}/send_poke`, data, {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
             });
 
             return response.data;
@@ -135,7 +138,7 @@ const NapCatAPI = {
 
 
             const response = await axios.post(url + `/send_group_msg`, data, {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
             });
 
             return response.data;
@@ -175,7 +178,7 @@ const NapCatAPI = {
             };
 
             const response = await axios.post(`${url}/send_group_msg`, data, {
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` }
             });
 
             return response.data;
@@ -188,7 +191,7 @@ const NapCatAPI = {
     async sendImage(url, data) {
         try {
             const response = await axios.post(`${url}/send_group_msg`, data, {
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` }
             });
 
             return response.data;
