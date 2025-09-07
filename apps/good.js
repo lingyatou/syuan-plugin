@@ -81,6 +81,7 @@ export class Good extends plugin {
             e.reply('仅主人执行')
             return
         }
+        e.reply('[Syuan-Plugin] 开始自动点赞任务')
         for (let qq of Object.keys(thumbsUpMelist)) {
             await NapCatAPI.thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
             await sleep(2000)
