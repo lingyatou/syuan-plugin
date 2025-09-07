@@ -36,6 +36,7 @@ export class poke_to_2YM extends plugin {
     async accept(e) {
         // 仅处理戳账号3999084287的情况
         if (e.target_id != 3999084287) return false
+        if (e.operator_id == e.user_id) return false
 
         // 表情包目录：data/Syuan-plugin/Yunzai_image/2YM
         const emojiDir = path.join(rootPath, 'data/Syuan-plugin/Yunzai_image/2YM')
