@@ -2,7 +2,7 @@
 * 点赞功能
 * NAPCAT_HTTP_223和NAPCAT_HTTP_304是url常量在tools/constant.js
 */
-import { pluginPath, NAPCAT_HTTP_223, NAPCAT_HTTP_304, sleep } from '../tools/index.js'
+import { pluginPath, NAPCAT_HTTP_223, NAPCAT_HTTP_304, sleep, isMaster } from '../tools/index.js'
 import NapCatAPI from '../tools/napcat-http.js'
 import path from 'path'
 import fs from 'fs';
@@ -61,6 +61,10 @@ export class Good extends plugin {
                 {
                     reg: '#赞我',
                     fnc: 'thumbsUpMe'
+                },
+                {
+                    reg: '#全赞',
+                    fnc: 'thumbsUpAll'
                 }
             ]
         })
@@ -70,6 +74,26 @@ export class Good extends plugin {
         await NapCatAPI.thumbsUp(which(e.self_id), qq, thumbsUpMe_sum)
         e.reply(`用户` + e.user_id + `,` + say)
         return true
+    }
+
+    async thumbsUpAll(e) {
+        if (!isMaster(e.self_id, e.user_id)) {
+            e.reply('仅主人执行')
+            return
+        }
+        for (let qq of Object.keys(thumbsUpMelist)) {
+            await NapCatAPI.thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
+            await sleep(2000)
+            await NapCatAPI.thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
+            logger.mark(`[Syuan-Plugin][自动点赞] 已给QQ${qq}点赞${thumbsUpMe_sum}次`)
+            if (thumbsUpMelist[qq].push) {
+                NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_223, qq, thumbsUpMelist[qq].group, say)
+                await sleep(2000)
+                NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_304, qq, thumbsUpMelist[qq].group, say)
+                await sleep(2000)
+            }
+            await sleep(8000) // 等8秒在下一个
+        }
     }
 
 
