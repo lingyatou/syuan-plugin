@@ -38,42 +38,6 @@ export class test extends plugin {
     }
 
     async accept(e) {
-        // 仅处理戳账号3999084287的情况
-        //if (e.target_id != 3999084287) return false
-
-        // 表情包目录：resources/Syuan_plugin/
-        const emojiDir = path.join(rootPath, 'resources/Syuan_plugin')
-        const files = fs.readdirSync(emojiDir).filter(file => /\.(jpg|png|gif)$/i.test(file))
-        if (files.length === 0) {
-            logger.warn('[SyuanPokeReply] 2毛目录为空')
-            return false
-        }
-
-        // 随机选择一张图片
-        const randFile = files[Math.floor(Math.random() * files.length)]
-        const imgPath = path.join(emojiDir, randFile)
-        e.reply('e.self_id:' + e.self_id + '-----' + 'user_id:' + e.user_id + '----')
-        sleep(1000)
-        e.reply('target_id:' + e.target_id)
-        e.reply("operator_id:" + e.operator_id)
-        sleep(1000)
-        e.reply(segment.image(imgPath))
-
-        // const data = {
-        //     group_id: e.group_id,  // 替换成目标群号
-        //     message: [
-        //         {
-        //             type: "image",
-        //             data: {
-        //                 file: `file://${imgPath}`,
-        //                 summary: "好戳！戳牢羽",
-        //                 sub_type: "1"
-        //             }
-        //         }
-        //     ]
-        // }
-        // await NapCatAPI.sendImage(which(e.self_id), data)
-        sleep(1000)
         return true
     }
 }
