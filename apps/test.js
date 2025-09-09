@@ -26,14 +26,14 @@ export class test extends plugin {
         super({
             name: '[Syuan-Plugin]点赞',
             dsc: '可以定时点赞',
-            event: 'notice.friend.poke',
+            event: 'message',
             priority: 500,
-            // rule: [
-            //     {
-            //         reg: '#测试',
-            //         fnc: 'accept'
-            //     }
-            // ]
+            rule: [
+                {
+                    reg: '#测试',
+                    fnc: 'accept'
+                }
+            ]
         })
     }
 
@@ -55,7 +55,6 @@ export class test extends plugin {
         e.reply('e.self_id:' + e.self_id + '-----' + 'user_id:' + e.user_id + '----')
         sleep(1000)
         e.reply('target_id:' + e.target_id)
-        sleep(1000)
         e.reply("operator_id:" + e.operator_id)
         sleep(1000)
         e.reply(segment.image(imgPath))
