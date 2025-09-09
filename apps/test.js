@@ -26,14 +26,14 @@ export class test extends plugin {
         super({
             name: '[Syuan-Plugin]点赞',
             dsc: '可以定时点赞',
-            event: 'message',
+            event: 'notice.friend.poke',
             priority: 500,
-            rule: [
-                {
-                    reg: '#测试',
-                    fnc: 'accept'
-                }
-            ]
+            // rule: [
+            //     {
+            //         reg: '#测试',
+            //         fnc: 'accept'
+            //     }
+            // ]
         })
     }
 
@@ -52,22 +52,28 @@ export class test extends plugin {
         // 随机选择一张图片
         const randFile = files[Math.floor(Math.random() * files.length)]
         const imgPath = path.join(emojiDir, randFile)
+        e.reply('e.self_id:' + e.self_id + '-----' + 'user_id:' + e.user_id + '----')
+        sleep(1000)
+        e.reply('target_id:' + e.target_id)
+        sleep(1000)
+        e.reply("operator_id:" + e.operator_id)
+        sleep(1000)
+        e.reply(segment.image(imgPath))
 
-
-        const data = {
-            group_id: e.group_id,  // 替换成目标群号
-            message: [
-                {
-                    type: "image",
-                    data: {
-                        file: `file://${imgPath}`,
-                        summary: "好戳！戳牢羽",
-                        sub_type: "1"
-                    }
-                }
-            ]
-        }
-        await NapCatAPI.sendImage(which(e.self_id), data)
+        // const data = {
+        //     group_id: e.group_id,  // 替换成目标群号
+        //     message: [
+        //         {
+        //             type: "image",
+        //             data: {
+        //                 file: `file://${imgPath}`,
+        //                 summary: "好戳！戳牢羽",
+        //                 sub_type: "1"
+        //             }
+        //         }
+        //     ]
+        // }
+        // await NapCatAPI.sendImage(which(e.self_id), data)
         sleep(1000)
         return true
     }
