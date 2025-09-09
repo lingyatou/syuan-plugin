@@ -25,7 +25,7 @@ export const Newcomer = newcomer
 export const Run = run
 export const Poke_to_2YM = poke_to_2YM
 
-// export const Test = test
+export const Test = test
 
 
-export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run]
+export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test]
