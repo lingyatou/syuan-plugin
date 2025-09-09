@@ -26,7 +26,7 @@ export class test extends plugin {
         super({
             name: '[Syuan-Plugin]点赞',
             dsc: '可以定时点赞',
-            event: 'notice.group.poke',
+            event: 'notice.friend.poke',
             priority: 500,
             // rule: [
             //     {
