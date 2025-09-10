@@ -8,7 +8,7 @@ import cfg from '../../../lib/config/config.js'
 
 
 
-const file = path.join(pluginPath, `resources`, `BotHelp`, `help.html`)
+const file = path.join(pluginPath, `resources`, `BotHelp`, `html`, `help.html`)
 const cfgyaml = path.join(pluginPath, 'config', 'BotHelp.yaml')
 
 
