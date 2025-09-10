@@ -2,8 +2,8 @@ import { rootPath, pluginPath } from "../tools/index.js"
 import path from 'path'
 import fs from 'fs'
 import yaml from 'yaml';
-const puppeteer = await import(path.join(rootPath, "lib/puppeteer/puppeteer.js"))
-const cfg = await import(path.join(rootPath, "lib/config/config.js"))
+const puppeteer = await import(path.join(rootPath, "lib", "puppeteer", "puppeteer.js"))
+const cfg = await import(path.join(rootPath, "lib", "config", "config.js"))
 
 
 const file = path.join(pluginPath, `resources`, `BotHelp`, `index.html`)
