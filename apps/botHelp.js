@@ -36,7 +36,8 @@ export class botHelp extends plugin {
             saveId: 'help',
             cwd: pluginPath,
             genshinPath: `${pluginPath}/resources/BotHelp/`,
-            helpData: helpData
+            helpData: helpData,
+            pluginPath: pluginPath
         });
         e.reply(img);
     }
