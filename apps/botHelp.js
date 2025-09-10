@@ -1,4 +1,4 @@
-import { rootPath, pluginPath } from "../tools"
+import { rootPath, pluginPath } from "../tools/index.js"
 import path from 'path'
 const puppeteer = await import(path.join(rootPath, "lib/puppeteer/puppeteer.js"))
 const cfg = await import(path.join(rootPath, "lib/config/config.js"))
