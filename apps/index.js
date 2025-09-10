@@ -31,4 +31,4 @@ export const BotHelp = botHelp
 export const Test = test
 
 
-export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test, BotHelp]
+export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test, BotHelp, Poke_to_2YM]

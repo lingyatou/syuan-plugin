@@ -7,6 +7,10 @@ import puppeteer from '../../../lib/puppeteer/puppeteer.js'
 import cfg from '../../../lib/config/config.js'
 
 
+/**
+ * 魔改自饺子的帮助插件
+ * 项目地址：https://gitee.com/T060925ZX/help-plugin
+ */
 
 const file = path.join(pluginPath, `resources`, `BotHelp`, `html`, `help.html`)
 const cfgyaml = path.join(pluginPath, 'config', 'BotHelp.yaml')
