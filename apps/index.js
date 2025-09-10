@@ -11,6 +11,7 @@ import { poke_to_2YM } from './poke.js'
 
 
 import { test } from './test.js'
+import { botHelp } from './botHelp.js'
 
 
 
@@ -24,8 +25,10 @@ export const underCover = Undercover
 export const Newcomer = newcomer
 export const Run = run
 export const Poke_to_2YM = poke_to_2YM
+export const BotHelp = botHelp
+
 
 export const Test = test
 
 
-export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test]
+export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test, BotHelp]

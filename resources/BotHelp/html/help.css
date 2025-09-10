@@ -1,0 +1,216 @@
+/* 隐藏滚动条 */
+body {
+  overflow: -moz-scrollbars-none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox 64+ */
+  background-color: #1a1a1a;
+  /* 全局暗背景 */
+  color: #ffffff;
+  /* 全局字体白色 */
+}
+
+body::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Edge */
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 5px;
+}
+
+@font-face {
+  font-family: "HYWenHei";
+  src: url("../font/ys.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  font-family: "OPSans";
+  font-size: 16px;
+  transform: scale(1.5);
+  transform-origin: 0 0;
+  width: 788px;
+}
+
+/* 主容器 */
+.container {
+  width: 788px;
+  padding: 30px 15px 15px 15px;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* 半透明黑色背景 */
+  background-image: url('../img/help_bg.jpg');
+  background-size: 100%;
+  color: #ffffff;
+}
+
+/* 头部 */
+.head_box {
+  border-radius: 15px;
+  font-family: HYWenHei;
+  padding: 20px 15px;
+  position: relative;
+  background: transparent;
+  /* 调暗背景 */
+  box-shadow: none;
+  border: none;
+  color: #ffffff;
+}
+
+.head_box .id_text {
+  font-size: 40px;
+  color: #ffffff;
+}
+
+.head_box .day_text {
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.head_box .Help_logo {
+  position: absolute;
+  top: -6px;
+  right: 15px;
+  width: 97px;
+}
+
+/* 基本信息 */
+.base_info {
+  position: relative;
+  padding-left: 10px;
+}
+
+.uid {
+  font-family: HYWenHei;
+  color: #ffffff;
+}
+
+/* 数据盒子 */
+.data_box {
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding: 20px 0px 5px 0px;
+  background: rgba(50, 50, 50, 0.5);
+  /* 暗色半透明背景 */
+  box-shadow: 0 5px 10px 0 rgb(0 0 0 / 15%);
+  position: relative;
+  backdrop-filter: blur(2px);
+  color: #ffffff;
+}
+
+.data_box .lable {
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 1;
+  margin-top: 3px;
+}
+
+.num {
+  font-size: 24px;
+  color: #ffffff;
+}
+
+/* 标签 */
+.tab_lable {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: table;
+  margin: 0 auto;
+  background: transparent;
+  /* 黄色半透明背景 */
+  /* 调暗背景 */
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  font-size: 20px;
+  padding: 3px 10px;
+  border-radius: 15px;
+  z-index: 20;
+  text-align: center;
+  font-weight: 600;
+}
+
+.tab_lable::before,
+.tab_lable::after {
+  content: "———————————————";
+  display: inline-block;
+  margin: 0 8px;
+  opacity: 0.6;
+}
+
+/* 数据行 */
+.data_line {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 14px;
+}
+
+.data_line_item {
+  width: 100px;
+  text-align: center;
+}
+
+/* 列表 */
+.list {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.list .item {
+  width: 239px;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  /* 暗色半透明 */
+  padding: 8px 6px 8px 6px;
+  border-radius: 8px;
+  margin: 0 0px 10px 10px;
+  color: #ffffff;
+}
+
+.list .item .icon {
+  width: 30px;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.list .item .title {
+  font-size: 16px;
+  margin-left: 6px;
+  line-height: 20px;
+  color: #ffffff;
+}
+
+.list .item .title .dec {
+  font-size: 12px;
+  color: #ffffff;
+  margin-top: 2px;
+}
+
+/* Logo */
+.logo {
+  font-size: 14px;
+  font-family: "HYWenHei";
+  text-align: center;
+  color: #ffffff;
+  background: transparent;
+  padding: 10px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+}
