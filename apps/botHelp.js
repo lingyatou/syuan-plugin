@@ -1,12 +1,11 @@
 import { rootPath, pluginPath } from "../tools/index.js"
-import { createRequire } from 'module';
 import path from 'path'
 import fs from 'fs'
 import yaml from 'yaml';
-const require = createRequire(import.meta.url);
 
-const puppeteer = require(path.join(rootPath, 'lib', 'puppeteer', 'puppeteer.js'));
-const cfg = require(path.join(rootPath, 'lib', 'config', 'config.js'));
+import puppeteer from '../../../lib/puppeteer/puppeteer.js'
+import cfg from '../../../lib/config/config.js'
+
 
 
 const file = path.join(pluginPath, `resources`, `BotHelp`, `index.html`)
