@@ -30,7 +30,7 @@ export class botHelp extends plugin {
     }
 
     async help(e) {
-        let { img } = await image(e, 'help', type, {
+        let { img } = await image({
             saveId: 'help',
             cwd: pluginPath,
             genshinPath: `${pluginPath}/resources/BotHelp/`,
