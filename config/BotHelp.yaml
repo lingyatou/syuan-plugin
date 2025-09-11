@@ -13,7 +13,7 @@
       title: '#清语表情搜索[关键字]'
       desc: '搜索表情里含关键字的表情'
     - icon: wave
-      title: 'AI对话'
+      title: '和我对话'
       desc: '以小罐头开头对话，只支持文字'
     - icon: switch
       title: '调戏罐头'
