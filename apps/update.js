@@ -23,16 +23,23 @@ export class Update extends plugin {
     }
 
     async SyuanUpdate(e) {
-        //使用pluginPath,在这个目录下进行git更新
-        e.reply('[Syuan-plugin]开始更新插件，请稍等...')
+        e.reply('[Syuan-plugin] 开始更新插件，请稍等...')
+
         exec(`git -C "${pluginPath}" pull && cd "${rootPath}" && pnpm i`, (err, stdout, stderr) => {
             if (err) {
-                e.reply('❌更新失败：' + err.message)
+                e.reply('❌ 更新失败：' + err.message)
                 return
             }
-            e.reply('✅更新完成！\n' + stdout || stderr)
+
+            // 判断输出里有没有关键字
+            if (/Already up to date/.test(stdout)) {
+                e.reply('✅ 已经是最新版本，无需更新。')
+            } else {
+                e.reply('✅ 更新完成！')
+            }
         })
     }
+
 
     async SyuanForceUpdate(e) {
         //使用pluginPath,在这个目录下进行git忽略本地改动更新
