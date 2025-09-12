@@ -71,7 +71,7 @@ export class Good extends plugin {
     }
 
     async thumbsUpMe(e) {
-        await NapCatAPI.thumbsUp(which(e.self_id), qq, thumbsUpMe_sum)
+        await NapCatAPI.thumbsUp(which(e.self_id), e.user_id, thumbsUpMe_sum)
         e.reply(`用户` + e.user_id + `,` + say)
         return true
     }

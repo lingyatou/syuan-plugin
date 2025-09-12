@@ -22,7 +22,13 @@ export class poke_to_2YM extends plugin {
             name: '戳一戳表情包回复（Syuan）',
             dsc: '当戳账号3999084287时发送表情包',
             event: 'notice.group.poke',
-            priority: 1
+            priority: 1,
+            rule: [
+                {
+                    reg: '',
+                    fnc: 'accept'
+                }
+            ]
         })
         this.task = {
             cron: '0 30 * * * *',
