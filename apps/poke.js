@@ -40,6 +40,7 @@ export class poke_to_2YM extends plugin {
 
 
     async accept(e) {
+        logger.debug(`[Syuan-Plugin] 收到poke事件: target=${e.target_id}, self=${e.self_id}, group=${e.group_id}`)
         // 仅处理戳账号3999084287的情况
         if (e.target_id != 3999084287) return false
         if (e.operator_id == e.user_id) return false
