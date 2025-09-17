@@ -1,2 +1,4 @@
 node_modules/
 /tools/constant.js
+/config/*
+/data/*
