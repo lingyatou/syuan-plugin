@@ -1,5 +1,5 @@
 import NapCatAPI from "../tools/napcat-http.js"
-import { NAPCAT_HTTP_223, NAPCAT_HTTP_304, sleep, rootPath } from "../tools/index.js"
+import { NAPCAT_HTTP_223, NAPCAT_HTTP_304, sleep, rootPath, loadData } from "../tools/index.js"
 
 import fs from 'fs'
 import path from 'path'
@@ -31,13 +31,18 @@ export class test extends plugin {
             rule: [
                 {
                     reg: '#测试',
-                    fnc: 'accept'
+                    fnc: 'cs'
                 }
             ]
         })
     }
 
-    async accept(e) {
+    async cs(e) {
+        if (e.user_id != 2331329306) {
+            return false
+        }
+        e.reply("开始写入数据到向量数据库")
+        await loadData(e);
         return true
     }
 }
