@@ -13,6 +13,7 @@ Chat:
   apiKey: '' # 前去 https://platform.deepseek.com/ 购买api-key
   baseURL: 'https://api.deepseek.com'
   model: '' 
+  index: 1
 aliyun:
   instanceId: ''
   regionId: ''
