@@ -53,11 +53,20 @@ done &&
 
 echo "✅ 所有仓库更新完成"
 
-# 重启 systemd 服务
-sudo systemctl restart meme_generator.service >/dev/null 2>&1 &&
-echo "✅ meme_generator.service 已重启"
+# 通过 tmux 重启服务
+if tmux has-session -t meme 2>/dev/null; then
+  # 发送两次 Ctrl+C 确保停止
+  tmux send-keys -t meme C-c
+  sleep 5
+  tmux send-keys -t meme C-c
+  sleep 5
+  # 重新启动服务
+  tmux send-keys -t meme "cd ~/meme && meme run" Enter
+  echo "✅ meme 服务已通过 tmux 重启"
+else
+  echo "❌ 未找到 meme_service tmux 会话"
+fi
 `
-
                 conn.exec(cmd, { pty: true }, (err, stream) => {
                     if (err) {
                         e.reply(`❌ 命令执行失败：${err.message}`)

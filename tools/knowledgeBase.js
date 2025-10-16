@@ -85,7 +85,10 @@ async function loadCategoryData(category, chunks) {
     const sum = chunks.length;
 
     for (const chunk of chunks) {
-        const safeText = chunk.text || '';
+        const safeText = chunk.text;
+        if (!safeText) {
+            continue;
+        }
 
         // 调用 embedding API
         const float32Vector = await embedText(safeText);
@@ -100,7 +103,7 @@ async function loadCategoryData(category, chunks) {
         rows.push({
             id,
             vector: Array.from(float32Vector),
-            metadata: chunk.metadata
+            metadata: safeText
         });
     }
 
@@ -136,38 +139,31 @@ async function loadCategoryData(category, chunks) {
 export async function searchWiki(query, topK = 3) {
     const queryVector = Array.from(await embedText(query));
     const db = await lancedb.connect(DB_DIR);
-    const categories = ['accessory', 'achievement', 'building', 'food'];
 
-    const tables = {};
-    await Promise.all(categories.map(async category => {
+    // 动态获取所有表名
+    const tableNames = await db.tableNames();
+
+    const resultsArr = await Promise.all(tableNames.map(async tableName => {
         try {
-            tables[category] = await db.openTable(`wiki_${category}`);
-        } catch (err) {
-            logger.warn(`[searchWiki] 打开表失败: wiki_${category}`, err);
-        }
-    }));
-
-    const resultsArr = await Promise.all(categories.map(async category => {
-        const table = tables[category];
-        if (!table) return [];
-        try {
-            const aa = await table.search(queryVector).limit(topK)
-            const results = await aa.toArray();
-
+            const table = await db.openTable(tableName);
+            const searchRes = await table.search(queryVector).limit(topK);
+            const results = await searchRes.toArray();
 
             return results.map(x => ({
                 score: x._distance,
-                metadata: x.metadata
+                metadata: x.metadata,
+                table: tableName
             }));
         } catch (err) {
-            logger.warn(`[searchWiki] 搜索表 wiki_${category} 出错:`, err);
+            logger.warn(`[searchWiki] 搜索表 ${tableName} 出错:`, err);
             return [];
         }
     }));
 
     const flatResults = resultsArr.flat();
-    return flatResults.sort((a, b) => a.score - b.score).slice(0, topK);
+    return flatResults.sort((a, b) => a.score - b.score).slice(0, topK).map(x => x.metadata).join("\n");
 }
+
 
 
 

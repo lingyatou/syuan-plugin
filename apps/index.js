@@ -12,6 +12,7 @@ import { poke_to_2YM } from './poke.js'
 
 import { test } from './test.js'
 import { botHelp } from './botHelp.js'
+import { gpt } from './huilv.js'
 
 
 
@@ -26,9 +27,10 @@ export const Newcomer = newcomer
 export const Run = run
 export const Poke_to_2YM = poke_to_2YM
 export const BotHelp = botHelp
-
+export const GP = gpt
 
 export const Test = test
 
 
-export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test, BotHelp, Poke_to_2YM]
+
+export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test, BotHelp, Poke_to_2YM, GP]
