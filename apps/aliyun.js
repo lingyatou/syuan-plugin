@@ -5,7 +5,7 @@ import { cfgdata } from '../tools/index.js'
 const config = cfgdata.loadCfg()
 // ====== 基础配置 ======
 const OWNER_QQ = 2331329306 // 主人QQ号
-const ALLOWED_USERS = [123456789, 987654321] // 可用命令的QQ
+const ALLOWED_USERS = [2331329306] // 可用命令的QQ
 const REGION_ID = config.aliyun.regionId // 地域
 const INSTANCE_ID = config.aliyun.instanceId // ECS实例ID
 const WEBUI_PORT = config.aliyun.webuiPort // WebUI端口（比如Stable Diffusion WebUI）
