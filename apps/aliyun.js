@@ -41,10 +41,10 @@ async function checkWebUI(ip) {
     try {
         const res = await axios.get(`http://${ip}:${WEBUI_PORT}`, { timeout: 5000 })
         return res.status === 200
-            ? `✅ WebUI (${ip}:${WEBUI_PORT}) 已就绪`
+            ? `✅ WebUI已就绪`
             : `⚠️ WebUI 响应异常：HTTP ${res.status}`
     } catch {
-        return `❌ WebUI (${ip}:${WEBUI_PORT}) 未响应`
+        return `❌ WebUI未响应`
     }
 }
 
