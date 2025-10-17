@@ -14,10 +14,3 @@ Chat:
   baseURL: 'https://api.deepseek.com'
   model: '' 
   index: 1
-aliyun:
-  instanceId: ''
-  regionId: ''
-  accessKeyId: ''
-  accessKeySecret: ''
-  plublicIp: 
-  webuiPort: 

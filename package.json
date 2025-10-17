@@ -12,9 +12,6 @@
   "license": "ISC",
   "packageManager": "pnpm@10.7.1",
   "dependencies": {
-    "@alicloud/ecs20140526": "^7.2.2",
-    "@alicloud/openapi-client": "^0.4.15",
-    "@alicloud/pop-core": "^1.8.0",
     "@lancedb/lancedb": "^0.22.0",
     "axios": "^1.11.0",
     "cheerio": "^1.1.2",

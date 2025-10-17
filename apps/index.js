@@ -13,7 +13,6 @@ import { poke_to_2YM } from './poke.js'
 import { test } from './test.js'
 import { botHelp } from './botHelp.js'
 import { gpt } from './huilv.js'
-import { aliyun } from './aliyun.js'
 
 
 export const ssh = UpdateMemeRepos
@@ -30,8 +29,7 @@ export const BotHelp = botHelp
 export const GP = gpt
 
 export const Test = test
-export const Aliyun = aliyun
 
 
 
-export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test, BotHelp, Poke_to_2YM, GP, Aliyun]
+export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test, BotHelp, Poke_to_2YM, GP]

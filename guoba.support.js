@@ -144,41 +144,6 @@ export function supportGuoba() {
           componentProps: { min: 0, max: 10 }
         },
 
-        {
-          component: "Divider",
-          label: "阿里云配置"
-        },
-        {
-          field: 'config.aliyun.instanceId',
-          label: '实例ID',
-          component: 'Input'
-        },
-        {
-          field: 'config.aliyun.regionId',
-          label: '地域ID',
-          component: 'Input'
-        },
-        {
-          field: 'config.aliyun.accessKeyId',
-          label: 'AccessKeyId',
-          component: 'Input'
-        },
-        {
-          field: 'config.aliyun.accessKeySecret',
-          label: 'AccessKeySecret',
-          component: 'InputPassword'
-        },
-        {
-          field: 'config.aliyun.plublicIp',
-          label: '公网IP',
-          component: 'Input'
-        },
-        {
-          field: 'config.aliyun.webuiPort',
-          label: 'WebUI端口',
-          component: 'InputNumber',
-          componentProps: { min: 1, max: 65535 }
-        },
       ],
 
       // 获取配置数据方法
