@@ -1,35 +1,24 @@
 
-import Core from '@alicloud/pop-core'
-import axios from 'axios'
 import { cfgdata } from '../tools/index.js'
+import { Ecs20140526Client as ECSClient, DescribeInstancesRequest, StartInstanceRequest, StopInstanceRequest } from '@alicloud/ecs20140526'
+import axios from 'axios'
 const config = cfgdata.loadCfg()
-// ====== 基础配置 ======
+// ====== 配置区 ======
 const OWNER_QQ = 2331329306 // 主人QQ号
 const ALLOWED_USERS = [2331329306] // 可用命令的QQ
 const REGION_ID = config.aliyun.regionId // 地域
 const INSTANCE_ID = config.aliyun.instanceId // ECS实例ID
 const WEBUI_PORT = config.aliyun.webuiPort // WebUI端口（比如Stable Diffusion WebUI）
+const REDIS_KEY = 'aliyun:ecs:auto_shutdown' // Redis 定时任务 Key
 
-// ====== 阿里云 SDK 客户端 ======
-const client = new Core({
-    accessKeyId: config.aliyun.accessKeyId, // '你的AccessKeyId',
-    accessKeySecret: config.aliyun.accessKeySecret, // '你的AccessKeySecret',
-    endpoint: 'https://ecs.aliyuncs.com',
-    apiVersion: '2014-05-26'
+// ====== 初始化阿里云 ECS 客户端 ======
+const client = new ECSClient({
+    accessKeyId: '你的AccessKeyId',
+    accessKeySecret: '你的AccessKeySecret',
+    endpoint: `https://ecs.${REGION_ID}.aliyuncs.com`
 })
 
-// ====== 工具函数 ======
-/** 查询实例状态 */
-async function getInstanceInfo() {
-    const res = await client.request('DescribeInstances', {
-        RegionId: REGION_ID,
-        InstanceIds: JSON.stringify([INSTANCE_ID])
-    }, { method: 'POST' })
-
-    const instance = res?.Instances?.Instance?.[0]
-    return instance || null
-}
-
+// ====== 状态映射表 ======
 const stateMap = {
     'Running': '🟢 运行中',
     'Stopped': '🔴 已停止',
@@ -37,167 +26,179 @@ const stateMap = {
     'Stopping': '🟠 停止中'
 }
 
-/** 检查 WebUI 是否正常响应 */
-async function checkWebUI(publicIp) {
-    if (!publicIp) return '⚪ 未检测到公网IP，无法检测 WebUI。'
+// ====== 工具函数 ======
+/** 获取实例信息 */
+async function getInstanceInfo() {
+    const req = new DescribeInstancesRequest({ regionId: REGION_ID, instanceIds: JSON.stringify([INSTANCE_ID]) })
+    const res = await client.describeInstances(req)
+    const instance = res.body.Instances.Instance?.[0]
+    return instance || null
+}
+
+/** 检查 WebUI 是否可访问 */
+async function checkWebUI(ip) {
+    if (!ip) return '⚪ 无公网IP，无法检测 WebUI'
     try {
-        const url = `http://${publicIp}:${WEBUI_PORT}`
-        const res = await axios.get(url, { timeout: 5000 })
-        if (res.status === 200) {
-            return `✅ WebUI已就绪`
-        } else {
-            return `⚠️ WebUI响应异常，状态码：${res.status}`
-        }
-    } catch (err) {
-        return `❌ WebUI未响应`
+        const res = await axios.get(`http://${ip}:${WEBUI_PORT}`, { timeout: 5000 })
+        return res.status === 200
+            ? `✅ WebUI (${ip}:${WEBUI_PORT}) 已就绪`
+            : `⚠️ WebUI 响应异常：HTTP ${res.status}`
+    } catch {
+        return `❌ WebUI (${ip}:${WEBUI_PORT}) 未响应`
     }
 }
 
-// ====== 主插件 ======
-export class aliyun extends plugin {
+// ====== 插件主类 ======
+export class aliyunInstance extends plugin {
     constructor() {
         super({
             name: '阿里云实例控制',
-            dsc: '通过命令控制阿里云ECS实例的启动、停止与状态检测',
+            dsc: '通过命令控制阿里云 ECS 实例启动、关闭与状态查询',
             event: 'message',
             priority: 10,
             rule: [
-                {
-                    reg: /^#?实例(\d+)?$/,
-                    fnc: 'startInstance'
-                },
-                {
-                    reg: /^#?(实例状态|状态查询)$/,
-                    fnc: 'checkStatus'
-                },
-                {
-                    reg: /^#?关闭实例$/,
-                    fnc: 'stopInstance'
-                }
+                { reg: /^#?实例(\d+)?小时?$/, fnc: 'startInstance' },
+                { reg: /^#?(状态查询|实例状态)$/, fnc: 'checkStatus' },
+                { reg: /^#?关闭实例$/, fnc: 'stopInstance' },
+                { reg: /^#?延长实例(\d+)小时?$/, fnc: 'extendInstance' }
             ]
         })
+
+        // 启动时自动恢复关机任务
+        this.restoreAutoShutdown()
     }
 
     /** 启动实例 */
     async startInstance(e) {
-        if (!ALLOWED_USERS.includes(e.user_id)) {
-            await e.reply('🚫 你没有权限使用此命令。')
-            return
-        }
+        if (!ALLOWED_USERS.includes(e.user_id)) return e.reply('🚫 你没有权限使用此命令。')
 
-        const match = e.msg.match(/^#?实例(\d+)?$/)
+        const match = e.msg.match(/实例(\d+)?/)
         const hours = match && match[1] ? parseInt(match[1]) : 1
-        const ms = hours * 60 * 60 * 1000
+        const ms = hours * 3600 * 1000
 
         try {
             const instance = await getInstanceInfo()
-            const currentStatus = instance?.Status
-
-            if (currentStatus === 'Running' || currentStatus === 'Starting') {
-                await e.reply(`⚠️ 实例当前状态为「${stateMap[currentStatus]}」，无需再次启动。`)
-                return
-            }
+            const status = instance?.Status
+            if (status === 'Running' || status === 'Starting') return e.reply(`⚠️ 实例当前状态为「${stateMap[status]}」`)
 
             await e.reply(`🌀 正在启动实例（预计运行 ${hours} 小时）...`)
-            await client.request('StartInstance', {
-                RegionId: REGION_ID,
-                InstanceId: INSTANCE_ID
-            }, { method: 'POST' })
+            const req = new StartInstanceRequest({ regionId: REGION_ID, instanceId: INSTANCE_ID })
+            await client.startInstance(req)
 
-            await e.reply(`✅ 实例启动成功！将在 ${hours} 小时后自动关闭。`)
+            const shutdownAt = Date.now() + ms
+            await redis.set(REDIS_KEY, shutdownAt)
+            this.scheduleShutdown(ms)
 
-            // 自动关闭
-            setTimeout(async () => {
-                try {
-                    await client.request('StopInstance', {
-                        RegionId: REGION_ID,
-                        InstanceId: INSTANCE_ID,
-                        ForceStop: true
-                    }, { method: 'POST' })
-                    await e.bot.sendPrivateMsg(OWNER_QQ, `💡 实例已自动关闭（运行了 ${hours} 小时）。`)
-                } catch (err) {
-                    await e.bot.sendPrivateMsg(OWNER_QQ, `⚠️ 自动关闭实例失败：${err.message}`)
-                }
-            }, ms)
-
-            // 通知主人
-            if (e.user_id !== OWNER_QQ) {
-                await e.bot.sendPrivateMsg(
-                    OWNER_QQ,
-                    `⚙️ 用户 ${e.nickname || e.user_id} 启动了阿里云实例（运行 ${hours} 小时）。`
-                )
-            }
-
+            await e.reply(`✅ 实例启动成功，将在 ${hours} 小时后自动关闭。`)
+            if (e.user_id !== OWNER_QQ)
+                e.bot.sendPrivateMsg(OWNER_QQ, `⚙️ 用户 ${e.nickname || e.user_id} 启动了实例（运行 ${hours} 小时）`)
         } catch (err) {
-            console.error('实例启动失败：', err)
-            await e.reply(`❌ 启动失败：${err.data?.Message || err.message}`)
+            console.error(err)
+            e.reply(`❌ 启动失败：${err.message}`)
         }
     }
 
-    /** 查询实例状态（含 WebUI 检测） */
+    /** 查询状态 */
     async checkStatus(e) {
-        if (!ALLOWED_USERS.includes(e.user_id)) {
-            await e.reply('🚫 你没有权限使用此命令。')
-            return
-        }
+        if (!ALLOWED_USERS.includes(e.user_id)) return e.reply('🚫 你没有权限使用此命令。')
 
         try {
             const instance = await getInstanceInfo()
-            if (!instance) {
-                await e.reply('⚠️ 未找到该实例信息。')
-                return
-            }
+            if (!instance) return e.reply('⚠️ 未找到实例信息。')
 
             const status = stateMap[instance.Status] || instance.Status
-            const publicIp = instance.PublicIpAddress?.IpAddress?.[0]
+            const ip = instance.PublicIpAddress?.IpAddress?.[0]
+            let msg = `📊 状态：${status}\n🧩 类型：${instance.InstanceType}`
 
-            let msg = `📊 实例状态：${status}\n🕓 创建时间：${instance.CreationTime}\n🧩 实例类型：${instance.InstanceType}`
-
-            // 仅在实例运行时检测 WebUI
-            if (instance.Status === 'Running' && publicIp) {
-                const uiStatus = await checkWebUI(publicIp)
-                msg += `\n${uiStatus}`
-            } else if (instance.Status === 'Running' && !publicIp) {
-                msg += `\n⚪ 无公网IP，无法检测 WebUI`
+            if (instance.Status === 'Running' && ip) msg += `\n${await checkWebUI(ip)}`
+            const shutdownAt = await redis.get(REDIS_KEY)
+            if (shutdownAt) {
+                const remain = parseInt(shutdownAt) - Date.now()
+                if (remain > 0) msg += `\n⏰ 距离自动关机：${(remain / 3600000).toFixed(2)} 小时`
             }
 
             await e.reply(msg)
         } catch (err) {
-            console.error('状态查询失败：', err)
-            await e.reply(`❌ 状态查询失败：${err.data?.Message || err.message}`)
+            console.error(err)
+            e.reply(`❌ 状态查询失败：${err.message}`)
         }
     }
 
     /** 手动关闭实例 */
     async stopInstance(e) {
-        if (!ALLOWED_USERS.includes(e.user_id)) {
-            await e.reply('🚫 你没有权限使用此命令。')
-            return
-        }
+        if (!ALLOWED_USERS.includes(e.user_id)) return e.reply('🚫 你没有权限使用此命令。')
 
         try {
             const instance = await getInstanceInfo()
-            const currentStatus = instance?.Status
-
-            if (currentStatus === 'Stopped' || currentStatus === 'Stopping') {
-                await e.reply(`⚠️ 实例当前状态为「${stateMap[currentStatus]}」，无需再次关闭。`)
-                return
-            }
+            const status = instance?.Status
+            if (status === 'Stopped' || status === 'Stopping') return e.reply(`⚠️ 实例当前为「${stateMap[status]}」`)
 
             await e.reply('🛑 正在关闭实例...')
-            await client.request('StopInstance', {
-                RegionId: REGION_ID,
-                InstanceId: INSTANCE_ID,
-                ForceStop: true
-            }, { method: 'POST' })
-
+            const req = new StopInstanceRequest({ regionId: REGION_ID, instanceId: INSTANCE_ID, forceStop: true })
+            await client.stopInstance(req)
+            await redis.del(REDIS_KEY)
             await e.reply('✅ 实例已关闭。')
-            if (e.user_id !== OWNER_QQ) {
-                await e.bot.sendPrivateMsg(OWNER_QQ, `⚙️ 用户 ${e.nickname || e.user_id} 手动关闭了阿里云实例。`)
-            }
+            if (e.user_id !== OWNER_QQ)
+                e.bot.sendPrivateMsg(OWNER_QQ, `⚙️ 用户 ${e.nickname || e.user_id} 手动关闭了实例。`)
         } catch (err) {
-            console.error('关闭失败：', err)
-            await e.reply(`❌ 关闭失败：${err.data?.Message || err.message}`)
+            console.error(err)
+            e.reply(`❌ 关闭失败：${err.message}`)
+        }
+    }
+
+    /** 延长实例运行时间 */
+    async extendInstance(e) {
+        if (!ALLOWED_USERS.includes(e.user_id)) return e.reply('🚫 你没有权限使用此命令。')
+
+        const match = e.msg.match(/延长实例(\d+)/)
+        const hours = match && match[1] ? parseInt(match[1]) : 1
+        const extendMs = hours * 3600 * 1000
+
+        const shutdownAt = parseInt(await redis.get(REDIS_KEY))
+        if (!shutdownAt) return e.reply('⚠️ 当前没有正在运行的定时任务。')
+
+        const remain = shutdownAt - Date.now()
+        const newShutdown = Date.now() + remain + extendMs
+
+        await redis.set(REDIS_KEY, newShutdown)
+        this.scheduleShutdown(newShutdown - Date.now())
+        await e.reply(`⏱ 已延长 ${hours} 小时，总剩余 ${((newShutdown - Date.now()) / 3600000).toFixed(2)} 小时。`)
+    }
+
+    /** 定时关机逻辑 */
+    scheduleShutdown(ms) {
+        if (this.shutdownTimer) clearTimeout(this.shutdownTimer)
+        this.shutdownTimer = setTimeout(async () => {
+            try {
+                const req = new StopInstanceRequest({ regionId: REGION_ID, instanceId: INSTANCE_ID, forceStop: true })
+                await client.stopInstance(req)
+                await redis.del(REDIS_KEY)
+                console.log('💡 实例自动关机完成')
+                Bot.sendPrivateMsg(OWNER_QQ, '💡 实例已自动关闭（定时任务触发）')
+            } catch (err) {
+                console.error('自动关闭失败：', err)
+            }
+        }, ms)
+    }
+
+    /** 启动时恢复任务 */
+    async restoreAutoShutdown() {
+        const shutdownAt = parseInt(await redis.get(REDIS_KEY))
+        if (!shutdownAt) return
+        const delay = shutdownAt - Date.now()
+
+        if (delay <= 0) {
+            console.log('⏰ 任务过期，立即执行关机')
+            try {
+                const req = new StopInstanceRequest({ regionId: REGION_ID, instanceId: INSTANCE_ID, forceStop: true })
+                await client.stopInstance(req)
+                await redis.del(REDIS_KEY)
+            } catch (err) {
+                console.error('恢复关机任务失败：', err)
+            }
+        } else {
+            console.log(`⏱ 恢复关机任务：将在 ${(delay / 3600000).toFixed(2)} 小时后执行`)
+            this.scheduleShutdown(delay)
         }
     }
 }

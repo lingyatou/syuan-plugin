@@ -22,7 +22,7 @@ export function supportGuoba() {
       link: 'https://github.com/lingyatou/syuan-plugin',
       isV3: true,
       description: '自用工具插件',
-      iconPath: 'https://gitee.com/Elvin-Apocalys/pic-bed/raw/master/Pardofelis/Pardofelis_14.webp',
+      iconPath: path.join(pluginPath, 'resources', '1212.webp'),
     },
 
     // 配置项信息
