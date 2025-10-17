@@ -50,7 +50,7 @@ async function checkWebUI(ip) {
 }
 
 // ====== 插件主类 ======
-export class aliyunInstance extends plugin {
+export class aliyun extends plugin {
     constructor() {
         super({
             name: '阿里云实例控制',
