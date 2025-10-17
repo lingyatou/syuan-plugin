@@ -1,6 +1,7 @@
 import { cfgdata } from '../tools/index.js'
 import ECS from '@alicloud/ecs20140526'
 import OpenApi, { Config as OpenApiConfig } from '@alicloud/openapi-client'
+const { default: EcsClient } = ECS
 import axios from 'axios'
 
 const config = cfgdata.loadCfg()
@@ -14,7 +15,7 @@ const WEBUI_PORT = config.aliyun.webuiPort // WebUI端口
 const REDIS_KEY = 'aliyun:ecs:auto_shutdown' // Redis 定时任务 Key
 
 // ====== 初始化阿里云 ECS 客户端 ======
-const client = new ECS(
+const client = new EcsClient(
     new OpenApiConfig({
         accessKeyId: config.aliyun.accessKeyId,
         accessKeySecret: config.aliyun.accessKeySecret,
