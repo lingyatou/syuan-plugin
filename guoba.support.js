@@ -1,5 +1,5 @@
 import lodash from 'lodash'
-import { cfgdata } from "./tools/index.js"
+import { cfgdata, pluginPath } from "./tools/index.js"
 import path from 'path'
 
 /**
