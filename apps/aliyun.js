@@ -1,6 +1,7 @@
 
 import { cfgdata } from '../tools/index.js'
-import { Ecs20140526Client as ECSClient, DescribeInstancesRequest, StartInstanceRequest, StopInstanceRequest } from '@alicloud/ecs20140526'
+import pkg from '@alicloud/ecs20140526'
+const { Ecs20140526Client: ECSClient, DescribeInstancesRequest, StartInstanceRequest, StopInstanceRequest } = pkg
 import axios from 'axios'
 const config = cfgdata.loadCfg()
 // ====== 配置区 ======
