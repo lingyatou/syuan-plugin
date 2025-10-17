@@ -1,5 +1,5 @@
 import lodash from 'lodash'
-import { cfgdata } from "tools/index.js"
+import { cfgdata } from "./tools/index.js"
 import path from 'path'
 
 /**
@@ -200,3 +200,4 @@ export function supportGuoba() {
     },
   }
 }
+
