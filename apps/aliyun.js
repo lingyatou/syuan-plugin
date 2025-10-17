@@ -1,7 +1,12 @@
 
 import { cfgdata } from '../tools/index.js'
-import pkg from '@alicloud/ecs20140526'
-const { Ecs20140526Client: ECSClient, DescribeInstancesRequest, StartInstanceRequest, StopInstanceRequest } = pkg
+
+import ECS from '@alicloud/ecs20140526'
+import OpenApi, { Config as OpenApiConfig } from '@alicloud/openapi-client'
+import axios from 'axios'
+
+const { default: EcsClient } = ECS
+
 import axios from 'axios'
 const config = cfgdata.loadCfg()
 // ====== 配置区 ======
@@ -13,11 +18,13 @@ const WEBUI_PORT = config.aliyun.webuiPort // WebUI端口（比如Stable Diffusi
 const REDIS_KEY = 'aliyun:ecs:auto_shutdown' // Redis 定时任务 Key
 
 // ====== 初始化阿里云 ECS 客户端 ======
-const client = new ECSClient({
-    accessKeyId: '你的AccessKeyId',
-    accessKeySecret: '你的AccessKeySecret',
-    endpoint: `https://ecs.${REGION_ID}.aliyuncs.com`
-})
+const client = new EcsClient(
+    new OpenApiConfig({
+        accessKeyId: config.aliyun.accessKeyId,
+        accessKeySecret: config.aliyun.accessKeySecret,
+        endpoint: `https://ecs.${REGION_ID}.aliyuncs.com`
+    })
+)
 
 // ====== 状态映射表 ======
 const stateMap = {
