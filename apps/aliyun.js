@@ -1,24 +1,20 @@
-
 import { cfgdata } from '../tools/index.js'
-
 import ECS from '@alicloud/ecs20140526'
 import OpenApi, { Config as OpenApiConfig } from '@alicloud/openapi-client'
 import axios from 'axios'
 
-const { default: EcsClient } = ECS
-
-import axios from 'axios'
 const config = cfgdata.loadCfg()
+
 // ====== 配置区 ======
 const OWNER_QQ = 2331329306 // 主人QQ号
 const ALLOWED_USERS = [2331329306] // 可用命令的QQ
 const REGION_ID = config.aliyun.regionId // 地域
 const INSTANCE_ID = config.aliyun.instanceId // ECS实例ID
-const WEBUI_PORT = config.aliyun.webuiPort // WebUI端口（比如Stable Diffusion WebUI）
+const WEBUI_PORT = config.aliyun.webuiPort // WebUI端口
 const REDIS_KEY = 'aliyun:ecs:auto_shutdown' // Redis 定时任务 Key
 
 // ====== 初始化阿里云 ECS 客户端 ======
-const client = new EcsClient(
+const client = new ECS(
     new OpenApiConfig({
         accessKeyId: config.aliyun.accessKeyId,
         accessKeySecret: config.aliyun.accessKeySecret,
@@ -37,9 +33,11 @@ const stateMap = {
 // ====== 工具函数 ======
 /** 获取实例信息 */
 async function getInstanceInfo() {
-    const req = new DescribeInstancesRequest({ regionId: REGION_ID, instanceIds: JSON.stringify([INSTANCE_ID]) })
-    const res = await client.describeInstances(req)
-    const instance = res.body.Instances.Instance?.[0]
+    const res = await client.describeInstances({
+        RegionId: REGION_ID,
+        InstanceIds: JSON.stringify([INSTANCE_ID])
+    })
+    const instance = res.body.Instances?.Instance?.[0]
     return instance || null
 }
 
@@ -48,9 +46,7 @@ async function checkWebUI(ip) {
     if (!ip) return '⚪ 无公网IP，无法检测 WebUI'
     try {
         const res = await axios.get(`http://${ip}:${WEBUI_PORT}`, { timeout: 5000 })
-        return res.status === 200
-            ? `✅ WebUI已就绪`
-            : `⚠️ WebUI 响应异常：HTTP ${res.status}`
+        return res.status === 200 ? `✅ WebUI已就绪` : `⚠️ WebUI 响应异常：HTTP ${res.status}`
     } catch {
         return `❌ WebUI未响应`
     }
@@ -90,8 +86,7 @@ export class aliyun extends plugin {
             if (status === 'Running' || status === 'Starting') return e.reply(`⚠️ 实例当前状态为「${stateMap[status]}」`)
 
             await e.reply(`🌀 正在启动实例（预计运行 ${hours} 小时）...`)
-            const req = new StartInstanceRequest({ regionId: REGION_ID, instanceId: INSTANCE_ID })
-            await client.startInstance(req)
+            await client.startInstance({ RegionId: REGION_ID, InstanceId: INSTANCE_ID })
 
             const shutdownAt = Date.now() + ms
             await redis.set(REDIS_KEY, shutdownAt)
@@ -142,8 +137,11 @@ export class aliyun extends plugin {
             if (status === 'Stopped' || status === 'Stopping') return e.reply(`⚠️ 实例当前为「${stateMap[status]}」`)
 
             await e.reply('🛑 正在关闭实例...')
-            const req = new StopInstanceRequest({ regionId: REGION_ID, instanceId: INSTANCE_ID, forceStop: true })
-            await client.stopInstance(req)
+            await client.stopInstance({
+                RegionId: REGION_ID,
+                InstanceId: INSTANCE_ID,
+                ForceStop: true
+            })
             await redis.del(REDIS_KEY)
             await e.reply('✅ 实例已关闭。')
             if (e.user_id !== OWNER_QQ)
@@ -178,8 +176,11 @@ export class aliyun extends plugin {
         if (this.shutdownTimer) clearTimeout(this.shutdownTimer)
         this.shutdownTimer = setTimeout(async () => {
             try {
-                const req = new StopInstanceRequest({ regionId: REGION_ID, instanceId: INSTANCE_ID, forceStop: true })
-                await client.stopInstance(req)
+                await client.stopInstance({
+                    RegionId: REGION_ID,
+                    InstanceId: INSTANCE_ID,
+                    ForceStop: true
+                })
                 await redis.del(REDIS_KEY)
                 console.log('💡 实例自动关机完成')
                 Bot.sendPrivateMsg(OWNER_QQ, '💡 实例已自动关闭（定时任务触发）')
@@ -198,8 +199,11 @@ export class aliyun extends plugin {
         if (delay <= 0) {
             console.log('⏰ 任务过期，立即执行关机')
             try {
-                const req = new StopInstanceRequest({ regionId: REGION_ID, instanceId: INSTANCE_ID, forceStop: true })
-                await client.stopInstance(req)
+                await client.stopInstance({
+                    RegionId: REGION_ID,
+                    InstanceId: INSTANCE_ID,
+                    ForceStop: true
+                })
                 await redis.del(REDIS_KEY)
             } catch (err) {
                 console.error('恢复关机任务失败：', err)
