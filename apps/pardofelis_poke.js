@@ -89,7 +89,7 @@ export class chuo extends plugin {
 
         // 戳别人哈气
         if (isMaster(e.self_id, e.operator_id) && e.self_id != e.target_id) {
-            let angryPath = getPoke(angryUrl, imageExtensions)
+            let angryPath = await getPoke(angryUrl, imageExtensions)
             let text_number = Math.ceil(Math.random() * bot_haqi_to_master['length'])
             if (angryPath instanceof Error) {
                 e.reply('图片获取失败，请检查目录路径或文件权限。');
@@ -125,7 +125,7 @@ export class chuo extends plugin {
             }
             let text_number = Math.ceil(Math.random() * bot_haqi_to_others['length'])
 
-            let angryPath = getPoke(angryUrl, imageExtensions)
+            let angryPath = await getPoke(angryUrl, imageExtensions)
             if (angryPath instanceof Error) {
                 e.reply('图片获取失败，请检查目录路径或文件权限。');
             } else if (angryPath === null) {
@@ -235,7 +235,7 @@ export class chuo extends plugin {
             else if (random_type < (reply_text + reply_img)) {
                 logger.info('[回复随机图片生效]')
 
-                let imagePath = getPoke(pokeUrl, imageExtensions)
+                let imagePath = await getPoke(pokeUrl, imageExtensions)
                 if (imagePath instanceof Error) {
                     e.reply('图片获取失败，请检查目录路径或文件权限。');
                 } else if (imagePath === null) {
@@ -256,7 +256,7 @@ export class chuo extends plugin {
             //回复随机语音
             else if (random_type < (reply_text + reply_img + reply_voice)) {
                 logger.info('[回复随机语音生效]')
-                let voicePath = getPoke(voiceUrl, voiceExtensions)
+                let voicePath = await getPoke(voiceUrl, voiceExtensions)
                 if (voicePath instanceof Error) {
                     e.reply('语音获取失败，请检查目录路径或文件权限。');
                 } else if (voicePath === null) {
@@ -279,7 +279,7 @@ export class chuo extends plugin {
             else if (random_type < (reply_text + reply_img + reply_voice + mutepick)) {
                 if (isMaster(e.self_id, e.target_id) || !group.is_admin) {
 
-                    let arrongancePath = getPoke(arronganceUrl, imageExtensions)
+                    let arrongancePath = await getPoke(arronganceUrl, imageExtensions)
                     if (arrongancePath instanceof Error) {
                         e.reply('图片获取失败，请检查目录路径或文件权限。');
                     } else if (arrongancePath === null) {
@@ -344,7 +344,7 @@ export class chuo extends plugin {
             else if (random_type < (reply_text + reply_img + reply_voice + mutepick + example)) {
                 logger.info('[回复拍一拍表情包生效]')
 
-                let image = getUserPoke(e.operator_id)
+                let image = await getUserPoke(e.operator_id)
                 if (image === null) return true
 
                 if (image instanceof Error) {
@@ -394,18 +394,19 @@ async function getPoke(isUrl, extension) {
         const random = filter[Math.floor(Math.random() * filter.length)];
         return path.join(isUrl, random);
     } catch (error) {
+        logger.error(`getPoke报错：${error}`);
         return error;
     }
 }
 
-function getUserPoke(existUser) {
+async function getUserPoke(existUser) {
     const thisUrl = path.join(pokeUrl, String(existUser))
     try {
         fs.access(thisUrl)
-        let here = getPoke(thisUrl, imageExtensions)
+        let here = await getPoke(thisUrl, imageExtensions)
         return here
     } catch (error) {
-        let other = getPoke(pokeUrl, imageExtensions)
+        let other = await getPoke(pokeUrl, imageExtensions)
         logge.error(`报错了：${error}`)
         return other
     }
