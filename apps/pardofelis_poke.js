@@ -406,6 +406,7 @@ function getUserPoke(existUser) {
         return here
     } catch (error) {
         let other = getPoke(pokeUrl, imageExtensions)
+        logge.error(`报错了：${error}`)
         return other
     }
 }
