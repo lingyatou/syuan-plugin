@@ -14,7 +14,7 @@ import { test } from './test.js'
 import { botHelp } from './botHelp.js'
 import { gpt } from './huilv.js'
 import { ai } from './ai.js'
-
+import { chuo } from './pardofelis_poke.js'
 
 export const ssh = UpdateMemeRepos
 export const Welcome = welcome
@@ -30,8 +30,9 @@ export const BotHelp = botHelp
 export const GP = gpt
 
 export const Test = test
+export const Chuo = chuo
 export const AI = ai
 
 
 
-export default [UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test, BotHelp, Poke_to_2YM, GP, AI]
+export default [Chuo, UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test, BotHelp, Poke_to_2YM, GP, AI]
