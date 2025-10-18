@@ -382,26 +382,22 @@ export class chuo extends plugin {
 
 
 
-function getPoke(isUrl, extension) {
+async function getPoke(isUrl, extension) {
     try {
-        const files = fs.readdirSync(isUrl);
-
+        const files = await fs.readdir(isUrl); // 异步读取目录
         const filter = files.filter(file =>
             extension.some(ext => path.extname(file).toLowerCase() === ext.toLowerCase())
         );
 
-        if (filter.length === 0) {
-            return null;
-        }
+        if (filter.length === 0) return null;
 
         const random = filter[Math.floor(Math.random() * filter.length)];
         return path.join(isUrl, random);
     } catch (error) {
-        logger.error(`getpoke报错了：${error}`)
-        return error
-
+        return error;
     }
 }
+
 function getUserPoke(existUser) {
     const thisUrl = path.join(pokeUrl, String(existUser))
     try {
