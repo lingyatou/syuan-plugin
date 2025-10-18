@@ -8,6 +8,9 @@ import path from 'path';
 import YAML from 'yaml'
 
 
+const API_URL = "https://yuanplus.cloud/v1/chat/completions";
+const API_KEY = "sk-JIPGsgxu73WJsdTDPFrDzGSL4qpfPuK0xec1E5Q5bSFbCICN";
+
 // 支持信息详见文件最下方
 //在这里设置事件概率,请保证概率加起来小于1，少于1的部分会触发反击
 let reply_text = 0.6 //文字回复概率
@@ -394,12 +397,13 @@ function getPoke(isUrl, extension) {
         const random = filter[Math.floor(Math.random() * filter.length)];
         return path.join(isUrl, random);
     } catch (error) {
+        logger.error(`getpoke报错了：${error}`)
         return error
 
     }
 }
 function getUserPoke(existUser) {
-    const thisUrl = pokeUrl + '/' + existUser
+    const thisUrl = path.join(pokeUrl, String(existUser))
     try {
         fs.access(thisUrl)
         let here = getPoke(thisUrl, imageExtensions)
