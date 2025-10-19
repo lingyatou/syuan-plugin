@@ -1,4 +1,4 @@
-import { cfgdata, dataPath, searchWiki, loadData, pluginPath } from "../tools/index.js"
+import { rootPath, cfgdata, dataPath, searchWiki, loadData, pluginPath } from "../tools/index.js"
 import OpenAI from "openai"
 import path from 'path'
 import fs from 'fs/promises';
@@ -7,9 +7,18 @@ const ysurl = path.join(pluginPath, 'data', '罐头.txt')
 const messageUsers = {};
 const messageGroups = {};
 let ys
-const API_URL = "https://yuanplus.cloud/v1/chat/completions";
-const API_KEY = "sk-JIPGsgxu73WJsdTDPFrDzGSL4qpfPuK0xec1E5Q5bSFbCICN";
 
+let api = {}
+
+try {
+    const a = await fs.readFile(path.join(rootPath, 'resources', 'Syuan_plugin', 'secret.yaml'), 'utf8');
+    api = YAML.parse(a);
+} catch (err) {
+    logger.error('读取文件失败:', err);
+}
+
+const API_KEY = api.chat_api_key
+const API_URL = api.yuan_api_url
 export class ai extends plugin {
     constructor() {
         super({
