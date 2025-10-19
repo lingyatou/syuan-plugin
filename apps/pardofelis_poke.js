@@ -8,8 +8,18 @@ import path from 'path';
 import YAML from 'yaml'
 
 
-const API_URL = "https://yuanplus.cloud/v1/chat/completions";
-const API_KEY = "sk-JIPGsgxu73WJsdTDPFrDzGSL4qpfPuK0xec1E5Q5bSFbCICN";
+
+let api = {}
+
+try {
+    const a = await fs.readFile(path.join(rootPath, 'resources', 'Syuan_plugin', 'secret.yaml'), 'utf8');
+    api = YAML.parse(a);
+} catch (err) {
+    logger.error('读取文件失败:', err);
+}
+
+const API_KEY = api.yuan_api_key
+const API_URL = api.yuan_api_url
 
 // 支持信息详见文件最下方
 //在这里设置事件概率,请保证概率加起来小于1，少于1的部分会触发反击
@@ -21,8 +31,7 @@ let example = 0.3 //拍一拍表情概率
 
 // AI是独立的
 let ai_reply = 0.4 //ai替换回复概率
-//剩下的0.08概率就是反击
-let master = "主人"
+
 let mutetime = 0 //禁言时间设置，单位分钟，如果设置0则为自动递增，如需关闭禁言请修改触发概率为0
 const botIds = [2239841632, 3210532108]
 
