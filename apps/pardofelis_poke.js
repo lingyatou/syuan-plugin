@@ -220,7 +220,7 @@ export class chuo extends plugin {
                             "Authorization": `Bearer ${API_KEY}`
                         },
                         body: JSON.stringify({
-                            model: "gpt-4o-mini",
+                            model: "deepseek-v3",
                             messages: [
                                 { role: "system", content: `你是一只名叫罐头的小猫咪，你现在的心情是${mood[text_number - 1]}，请根据这个心情来回复用户。每句话结尾都要加一个喵字。` },
                                 {
