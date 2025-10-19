@@ -30,10 +30,6 @@ export class ai extends plugin {
             rule: [{
                 reg: '^(罐头|小罐头)(.*)',
                 fnc: 'chat'
-            }, {
-                reg: '^[\s\S]*',
-                fnc: 'chatAt',
-                log: false
             }]
         })
     }
