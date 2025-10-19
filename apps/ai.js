@@ -2,6 +2,7 @@ import { rootPath, cfgdata, dataPath, searchWiki, loadData, pluginPath } from ".
 import OpenAI from "openai"
 import path from 'path'
 import fs from 'fs/promises';
+import YAML from 'yaml'
 
 const ysurl = path.join(pluginPath, 'data', '罐头.txt')
 const messageUsers = {};
