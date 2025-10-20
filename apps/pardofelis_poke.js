@@ -109,7 +109,7 @@ export class chuo extends plugin {
                     e.reply([
                         segment.at(e.operator_id),
                         `\n${bot_haqi_to_master[text_number - 1]}`,
-                        IMAGE(angryPath, { isface: true }),// 使用本地图片路径
+                        await IMAGE(angryPath, { isface: true }),// 使用本地图片路径
                     ], true);
 
                     // 等待 1 秒
@@ -144,7 +144,7 @@ export class chuo extends plugin {
                     e.reply([
                         segment.at(e.operator_id),
                         `\n${bot_haqi_to_others[text_number - 1]}`,
-                        IMAGE(angryPath, { isface: true }),// 使用本地图片路径
+                        await IMAGE(angryPath, { isface: true })// 使用本地图片路径
 
                     ], true);
 
@@ -253,7 +253,7 @@ export class chuo extends plugin {
                 } else {
                     try {
                         e.reply(
-                            IMAGE(imagePath, { isface: true }), // 使用本地图片路径
+                            IMAGE(imagePath, { isface: true }) // 使用本地图片路径
                         );
 
                         return true;
@@ -297,7 +297,7 @@ export class chuo extends plugin {
                     } else {
                         try {
                             e.reply(
-                                IMAGE(arrongancePath, { isface: true }), // 使用本地图片路径
+                                IMAGE(arrongancePath, { isface: true }) // 使用本地图片路径
                             );
 
                             return true;
@@ -364,7 +364,7 @@ export class chuo extends plugin {
                 } else {
                     try {
                         e.reply(
-                            IMAGE(image, { isface: true }), // 使用本地图片路径
+                            IMAGE(image, { isface: true }) // 使用本地图片路径
                         );
 
                         return true;
