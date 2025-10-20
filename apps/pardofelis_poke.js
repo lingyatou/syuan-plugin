@@ -253,7 +253,7 @@ export class chuo extends plugin {
                 } else {
                     try {
                         e.reply(
-                            IMAGE(imagePath, { isface: true }) // 使用本地图片路径
+                            await IMAGE(imagePath, { isface: true }) // 使用本地图片路径
                         );
 
                         return true;
@@ -297,7 +297,7 @@ export class chuo extends plugin {
                     } else {
                         try {
                             e.reply(
-                                IMAGE(arrongancePath, { isface: true }) // 使用本地图片路径
+                                await IMAGE(arrongancePath, { isface: true }) // 使用本地图片路径
                             );
 
                             return true;
@@ -364,7 +364,7 @@ export class chuo extends plugin {
                 } else {
                     try {
                         e.reply(
-                            IMAGE(image, { isface: true }) // 使用本地图片路径
+                            await IMAGE(image, { isface: true }) // 使用本地图片路径
                         );
 
                         return true;
