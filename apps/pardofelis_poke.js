@@ -252,9 +252,9 @@ export class chuo extends plugin {
                     e.reply('没有找到图片文件。');
                 } else {
                     try {
-                        e.reply([
+                        e.reply(
                             IMAGE(imagePath, { isface: true }), // 使用本地图片路径
-                        ]);
+                        );
 
                         return true;
                     } catch (err) {
@@ -296,9 +296,9 @@ export class chuo extends plugin {
                         e.reply('没有找到图片文件。');
                     } else {
                         try {
-                            e.reply([
+                            e.reply(
                                 IMAGE(arrongancePath, { isface: true }), // 使用本地图片路径
-                            ]);
+                            );
 
                             return true;
                         } catch (err) {
@@ -363,9 +363,9 @@ export class chuo extends plugin {
                     e.reply('没有找到图片文件。');
                 } else {
                     try {
-                        e.reply([
+                        e.reply(
                             IMAGE(image, { isface: true }), // 使用本地图片路径
-                        ]);
+                        );
 
                         return true;
                     } catch (err) {
