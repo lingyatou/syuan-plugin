@@ -109,7 +109,7 @@ export class chuo extends plugin {
                     e.reply([
                         segment.at(e.operator_id),
                         `\n${bot_haqi_to_master[text_number - 1]}`,
-                        segment.image(angryPath), // 使用本地图片路径
+                        IMAGE(angryPath, { isface: true }),// 使用本地图片路径
                     ], true);
 
                     // 等待 1 秒
@@ -144,7 +144,8 @@ export class chuo extends plugin {
                     e.reply([
                         segment.at(e.operator_id),
                         `\n${bot_haqi_to_others[text_number - 1]}`,
-                        segment.image(angryPath), // 使用本地图片路径
+                        IMAGE(angryPath, { isface: true }),// 使用本地图片路径
+
                     ], true);
 
                     // 等待 1 秒
@@ -252,7 +253,7 @@ export class chuo extends plugin {
                 } else {
                     try {
                         e.reply([
-                            segment.image(imagePath), // 使用本地图片路径
+                            IMAGE(imagePath, { isface: true }), // 使用本地图片路径
                         ]);
 
                         return true;
@@ -296,7 +297,7 @@ export class chuo extends plugin {
                     } else {
                         try {
                             e.reply([
-                                segment.image(arrongancePath), // 使用本地图片路径
+                                IMAGE(arrongancePath, { isface: true }), // 使用本地图片路径
                             ]);
 
                             return true;
@@ -363,7 +364,7 @@ export class chuo extends plugin {
                 } else {
                     try {
                         e.reply([
-                            segment.image(image), // 使用本地图片路径
+                            IMAGE(image, { isface: true }), // 使用本地图片路径
                         ]);
 
                         return true;
@@ -421,3 +422,9 @@ async function getUserPoke(existUser) {
     }
 }
 
+
+async function IMAGE(file, options = {}) {
+    const imgSeg = segment.image(file)
+    imgSeg.sub_type = options.isface ? 1 : 0
+    return imgSeg
+}
