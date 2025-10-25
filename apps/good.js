@@ -107,13 +107,13 @@ export class Good extends plugin {
         for (let qq of Object.keys(thumbsUpMelist)) {
             await NapCatAPI.thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
             await sleep(2000)
-            await NapCatAPI.thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
+            //   await NapCatAPI.thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
             logger.mark(`[Syuan-Plugin][自动点赞] 已给QQ${qq}点赞${thumbsUpMe_sum}次`)
             if (thumbsUpMelist[qq].push) {
                 NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_223, qq, thumbsUpMelist[qq].group, say)
                 await sleep(2000)
-                NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_304, qq, thumbsUpMelist[qq].group, say)
-                await sleep(2000)
+                //   NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_304, qq, thumbsUpMelist[qq].group, say)
+                //  await sleep(2000)
             }
             await sleep(8000) // 等8秒在下一个
         }
@@ -154,12 +154,12 @@ schedule.scheduleJob('00 00 10 * * *', async () => {
     for (let qq of Object.keys(thumbsUpMelist)) {
         await NapCatAPI.thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
         await sleep(2000)
-        await NapCatAPI.thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
+        // await NapCatAPI.thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
         logger.mark(`[Syuan-Plugin][自动点赞] 已给QQ${qq}点赞${thumbsUpMe_sum}次`)
         if (thumbsUpMelist[qq].push) {
             NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_223, qq, thumbsUpMelist[qq].group, say)
             await sleep(2000)
-            NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_304, qq, thumbsUpMelist[qq].group, say)
+            //  NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_304, qq, thumbsUpMelist[qq].group, say)
             await sleep(2000)
         }
         await sleep(8000) // 等8秒在下一个
