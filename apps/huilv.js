@@ -41,12 +41,12 @@ const { presets: presetNames, presetFiles } = loadPresetList()
 export class gpt extends plugin {
     constructor() {
         super({
-            name: '[Syuan-Plugin]ai',
+            name: '[Syuan-Plugin]al',
             dsc: 'ai服务',
             event: 'message',
             priority: 50,
             rule: [
-                { reg: '^#?al(.*)', fnc: 'chat' },
+                { reg: '^#al(.*)', fnc: 'chat' },
                 { reg: '^#rm记录', fnc: 'rm' },
                 { reg: '^#cz', fnc: '重载' },
                 { reg: '^#(不)?知识', fnc: 'zsk' },

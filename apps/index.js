@@ -35,4 +35,4 @@ export const AI = ai
 
 
 
-export default [Chuo, UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test, BotHelp, Poke_to_2YM, GP, AI]
+export default [Chuo, UpdateMemeRepos, Welcome, grasscutter, updateplugin, Keyword, good, underCover, Newcomer, Run, Test, BotHelp, Poke_to_2YM, AI]
