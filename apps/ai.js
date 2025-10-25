@@ -26,11 +26,14 @@ export class ai extends plugin {
             name: '[Syuan-Plugin]ai',
             dsc: 'ai服务',
             event: 'message.group',
-            priority: 50,
+            priority: 9999,
             rule: [{
                 reg: '^(罐头|小罐头)(.*)',
                 fnc: 'chat'
-            }]
+            }, {
+                fnc: 'chatAt'
+            }
+            ]
         })
     }
 
