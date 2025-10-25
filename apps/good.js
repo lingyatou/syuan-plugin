@@ -28,26 +28,6 @@ try {
 /** 点赞次数，非会员10次，会员20次 */
 const thumbsUpMe_sum = 10
 
-const say = time() + ",已给你点赞" + thumbsUpMe_sum + "次哦"
-
-function time() {
-    const now = new Date();
-    const hour = now.getHours(); // 0~23 的数字
-
-    if (0 <= hour && hour <= 5) {
-        return "碗尚豪小猫娘";
-    } else if (6 <= hour && hour <= 8) {
-        return "枣尚豪小猫娘";
-    } else if (9 <= hour && hour <= 11) {
-        return "尚唔豪小猫娘";
-    } else if (12 <= hour && hour <= 14) {
-        return "中唔豪小猫娘";
-    } else if (15 <= hour && hour <= 17) {
-        return "虾呜豪小猫娘";
-    } else if (18 <= hour && hour <= 23) {
-        return "碗尚豪小猫娘";
-    }
-}
 
 
 export class Good extends plugin {
@@ -71,6 +51,27 @@ export class Good extends plugin {
     }
 
     async thumbsUpMe(e) {
+        const say = time() + ",已给你点赞" + thumbsUpMe_sum + "次哦"
+
+        function time() {
+            const now = new Date();
+            const hour = now.getHours(); // 0~23 的数字
+
+            if (0 <= hour && hour <= 5) {
+                return "碗尚豪小猫娘";
+            } else if (6 <= hour && hour <= 8) {
+                return "枣尚豪小猫娘";
+            } else if (9 <= hour && hour <= 11) {
+                return "尚唔豪小猫娘";
+            } else if (12 <= hour && hour <= 14) {
+                return "中唔豪小猫娘";
+            } else if (15 <= hour && hour <= 17) {
+                return "虾呜豪小猫娘";
+            } else if (18 <= hour && hour <= 23) {
+                return "碗尚豪小猫娘";
+            }
+        }
+
         await NapCatAPI.thumbsUp(which(e.self_id), e.user_id, thumbsUpMe_sum)
         e.reply(`用户` + e.user_id + `,` + say)
         return true
@@ -81,6 +82,27 @@ export class Good extends plugin {
             e.reply('仅主人执行')
             return
         }
+        const say = time() + ",已给你点赞" + thumbsUpMe_sum + "次哦"
+
+        function time() {
+            const now = new Date();
+            const hour = now.getHours(); // 0~23 的数字
+
+            if (0 <= hour && hour <= 5) {
+                return "碗尚豪小猫娘";
+            } else if (6 <= hour && hour <= 8) {
+                return "枣尚豪小猫娘";
+            } else if (9 <= hour && hour <= 11) {
+                return "尚唔豪小猫娘";
+            } else if (12 <= hour && hour <= 14) {
+                return "中唔豪小猫娘";
+            } else if (15 <= hour && hour <= 17) {
+                return "虾呜豪小猫娘";
+            } else if (18 <= hour && hour <= 23) {
+                return "碗尚豪小猫娘";
+            }
+        }
+
         e.reply('[Syuan-Plugin] 开始自动点赞任务')
         for (let qq of Object.keys(thumbsUpMelist)) {
             await NapCatAPI.thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
@@ -108,6 +130,27 @@ export class Good extends plugin {
  * 只选小时就可以了
 */
 schedule.scheduleJob('00 00 10 * * *', async () => {
+    const say = time() + ",已给你点赞" + thumbsUpMe_sum + "次哦"
+
+    function time() {
+        const now = new Date();
+        const hour = now.getHours(); // 0~23 的数字
+
+        if (0 <= hour && hour <= 5) {
+            return "碗尚豪小猫娘";
+        } else if (6 <= hour && hour <= 8) {
+            return "枣尚豪小猫娘";
+        } else if (9 <= hour && hour <= 11) {
+            return "尚唔豪小猫娘";
+        } else if (12 <= hour && hour <= 14) {
+            return "中唔豪小猫娘";
+        } else if (15 <= hour && hour <= 17) {
+            return "虾呜豪小猫娘";
+        } else if (18 <= hour && hour <= 23) {
+            return "碗尚豪小猫娘";
+        }
+    }
+
     for (let qq of Object.keys(thumbsUpMelist)) {
         await NapCatAPI.thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
         await sleep(2000)
