@@ -23,15 +23,12 @@ files.forEach((file) => {
 })
 ret = await Promise.allSettled(ret)
 
-logger.info('---------```````^_^```````---------')
-logger.info(versionInfo.getProjectName() + versionInfo.getVersion())
-logger.info(versionInfo.getAuthor())
-logger.info(versionInfo.getDescription())
+
 
 
 logger.info('✨🌸━━━━━━━━ SYUAN-PLUGIN ━━━━━━━━🌸✨')
 logger.info(`💖 插件名称：${logger.cyan(versionInfo.getProjectName())}`)
-logger.info(`📦 插件版本：v${logger.green(versionInfo.getVersion())}`)
+logger.info(`📦 插件版本：${logger.green(versionInfo.getVersion())}`)
 logger.info(`👩‍💻 作者：${logger.magenta(versionInfo.getAuthor())}`)
 logger.info(`📜 描述：${versionInfo.getDescription()}`)
 logger.info('✨🌸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━🌸✨')
