@@ -1,7 +1,7 @@
 import { versionInfo, pluginPath } from './tools/index.js'
 
 import path from 'path'
-export * from './apps/index.js'
+
 import fs from 'node:fs'
 
 const appsPath = path.join(pluginPath, 'apps')
