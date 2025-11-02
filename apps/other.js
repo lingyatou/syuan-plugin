@@ -30,8 +30,8 @@ export class welcome extends plugin {
                     fnc: 'getGroupWelcome'
                 },
                 {
-                    reg: '^#syuan帮助',
-                    fnc: 'getHelp'
+                    reg: '^#p社(.*)',
+                    fnc: 'pixiv'
                 }
             ]
         })
@@ -185,6 +185,14 @@ export class welcome extends plugin {
             await e.reply(await e.friend.makeForwardMsg(forwardMsgs));
         }
         return true;
+    }
+
+    async pixiv(e) {
+        const match = e.msg.match(/^#p社(.*)/)
+        const keyword = match[1]
+
+        e.reply(`https://www.pixiv.net/artworks/${keyword}`)
+        return true
     }
 
 }
