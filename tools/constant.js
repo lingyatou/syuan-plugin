@@ -4,4 +4,4 @@
 export const NAPCAT_HTTP_223 = "http://127.0.0.1:3000";
 
 //bot 3046595434的NapCat的HTTP服务器url
-export const NAPCAT_HTTP_304 = "http://43.143.104.104:3001";
+export const NAPCAT_HTTP_304 = "http://127.0.0.1:3001";
