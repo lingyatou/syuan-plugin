@@ -49,7 +49,7 @@ export function sleep(ms) {
  * console.log(data.userId);
  */
 export function getPrivacyData() {
-    const privacyDataPath = path.join(rootPath, "data/Syuan-plugin/privacy.json");
+    const privacyDataPath = path.join(rootPath, "data/syuan/privacy.json");
 
     if (!fs.existsSync(privacyDataPath)) {
         logger.warn("privacy.json 不存在");
