@@ -18,7 +18,7 @@ try {
     logger.error('读取文件失败:', err);
 }
 
-const API_KEY = api.chat_api_key
+const API_KEY = api.yuan_api_key
 const API_URL = api.yuan_api_url
 export class ai extends plugin {
     constructor() {
