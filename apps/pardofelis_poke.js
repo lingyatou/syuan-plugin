@@ -61,7 +61,7 @@ const mood = [
 ]
 
 const napcatUrl = "http://127.0.0.1:3000"
-const url = path.join(rootPath, 'resources', 'poke')
+const url = path.join(pluginPath, 'resources', 'poke')
 const pokeUrl = path.join(url, 'poke')
 const angryUrl = path.join(url, 'angry')
 const arronganceUrl = path.join(url, 'arrogance')

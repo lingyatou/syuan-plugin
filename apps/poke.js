@@ -30,12 +30,6 @@ export class poke_to_2YM extends plugin {
                 }
             ]
         })
-        this.task = {
-            cron: '0 30 * * * *',
-            name: '定时更新2YM的图片仓库',
-            fnc: () => update(), // 指触发的函数
-            log: true // 是否输出日志
-        }
     }
 
 
