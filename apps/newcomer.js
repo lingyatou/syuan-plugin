@@ -1,4 +1,4 @@
-import { rootPath } from '../tools/index.js';
+import { dataPath, rootPath } from '../tools/index.js';
 export class newcomer extends plugin {
     constructor() {
         super({
@@ -16,7 +16,7 @@ export class newcomer extends plugin {
         /** 冷却cd 0s */
         let cd = 1
         let output;
-        const Default = '欢迎新人呀，可以点击以下链接查看本bot帮助\nhttps://blog.pardofelis.icu/posts/1da0051f0357.html'
+        const Default = '欢迎新人呀，可以点击以下链接查看本bot帮助\nhttps://blog.pardofelis.icu/posts/1da0051f0357/'
         if (this.e.user_id == this.e.bot.uin) return
 
         /** cd */
@@ -30,7 +30,7 @@ export class newcomer extends plugin {
         try {
             const fs = await import('fs');
             const path = await import('path');
-            const filePath = path.join(rootPath, 'data/Syuan-plugin/welcome.json');
+            const filePath = path.join(dataPath, 'welcome.json');
             if (fs.existsSync(filePath)) {
                 const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
                 if (data && data[this.e.group_id]) {
