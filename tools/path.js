@@ -14,6 +14,6 @@ const pluginPath = path.join(__dirname, '..')
 // yunzai根路径
 const rootPath = path.join(pluginPath, '..', '..')
 
-const dataPath = path.join(rootPath, 'data', 'Syuan-plugin')
+const dataPath = path.join(rootPath, 'data', 'syuan')
 
 export { pluginPath, rootPath, dataPath }
