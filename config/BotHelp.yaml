@@ -22,8 +22,8 @@
       title: '#撤回'
       desc: '@机器人发送的消息发送#撤回即可撤回'
     - icon: restaurant_smoothie
-      title: '#联系主人<消息>'
-      desc: '联系主人#联系主人<消息>，不用加空格'
+      title: '开盒@某人'
+      desc: '其实是看该用户的资料。必须要@某人才能用'
     - icon: spring_of_pure_sacred_dewdrop
       title: 'bilibili视频解析'
       desc: '支持小程序卡片'
@@ -42,6 +42,9 @@
     - icon: delightful_encounter
       title: '#七夕抽奖 #七夕十连'
       desc: '看看七夕表白成不成功'
+    - icon: coin
+      title: '#wwcos'
+      desc: '查看鸣潮cos'
 
 - group: 原神功能
   list:
