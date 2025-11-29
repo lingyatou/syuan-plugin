@@ -8,7 +8,7 @@
   },
   "type": "module",
   "imports": {
-    "#paths": "./utils/paths.js"
+    "#paths": "./utils/path.js"
   },
   "keywords": [],
   "author": "源Syuan",
