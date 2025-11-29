@@ -13,7 +13,7 @@ import cfg from '../../../lib/config/config.js'
  */
 
 const file = path.join(paths.pluginResourcesPath,  `BotHelp`, `html`, `help.html`)
-const cfgyaml = path.join(pluginPath, 'config', 'BotHelp.yaml')
+const cfgyaml = path.join(paths.pluginPath, 'config', 'BotHelp.yaml')
 
 
 const configData = fs.readFileSync(cfgyaml, 'utf8');
