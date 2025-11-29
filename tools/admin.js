@@ -1,10 +1,10 @@
-import { rootPath } from './path.js'
+import { paths } from './path.js'
 import fs from 'fs'
 import YAML from 'yaml'
 import path from 'path'
 
 // 读取other.yaml
-const configPath = path.join(rootPath, 'config/config/other.yaml')
+const configPath = path.join(paths.rootPath, 'config/config/other.yaml')
 const file = fs.readFileSync(configPath, 'utf8')
 const config = YAML.parse(file)
 
@@ -49,7 +49,7 @@ export function sleep(ms) {
  * console.log(data.userId);
  */
 export function getPrivacyData() {
-    const privacyDataPath = path.join(rootPath, "data/syuan/privacy.json");
+    const privacyDataPath = path.join(paths.rootDataPath, "privacy.json");
 
     if (!fs.existsSync(privacyDataPath)) {
         logger.warn("privacy.json 不存在");

@@ -1,9 +1,9 @@
-import { dataPath } from './path.js'
+import { paths } from './path.js'
 import fs from 'fs'
 import path from 'path'
 //ssh实例信息文件
 
-const sshInfoPath = path.join(dataPath, 'sshInfo.json')
+const sshInfoPath = path.join(paths.rootDataPath, 'sshInfo.json')
 
 /**
  * SSH配置数据管理

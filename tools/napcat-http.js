@@ -2,7 +2,7 @@
 * 用于封装 NapCat 相关函数
 */
 import axios from 'axios';
-import { rootPath, getPrivacyData } from './index.js'
+import { getPrivacyData } from './index.js'
 import path from 'path';
 const privacyData = getPrivacyData()
 const token = privacyData.NapcatToken

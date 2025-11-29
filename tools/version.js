@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { pluginPath } from './path.js'
-const pkgPath = path.join(pluginPath, 'package.json')
+import { paths } from './path.js'
+const pkgPath = path.join(paths.pluginPath, 'package.json')
 const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
 /**
  * 项目版本信息管理

@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import * as lancedb from "@lancedb/lancedb";
-import { dataPath, cfgdata, pluginPath } from "./index.js";
+import { paths, cfgdata } from "./index.js";
 import fs from "fs";
 import path from "path";
 
@@ -8,7 +8,7 @@ import path from "path";
 // 加载配置数据
 const cfgData = cfgdata.loadCfg()
 
-const DB_DIR = path.join(dataPath, "lancedb");
+const DB_DIR = path.join(paths.rootDataPath, "lancedb");
 
 if (cfgData.Embedding.apiKey === "" || cfgData.Embedding.apiKey === undefined) {
     logger.warn("未配置OpenAI API Key，向量数据库功能不可用");
@@ -56,7 +56,7 @@ export async function loadData(e) {
 
         let allChunks = [];
         // 遍历md目录下的所有md文件
-        const fileCategories = path.join(pluginPath, 'data', "md");
+        const fileCategories = path.join(paths.pluginDataPath,  "md");
         const mdFiles = fs.readdirSync(fileCategories)
             .filter(f => f.endsWith(".md"))
             .map(f => path.join(fileCategories, f));

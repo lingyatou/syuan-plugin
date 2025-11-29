@@ -1,9 +1,9 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { pluginPath } from './path.js'
+import { paths } from './path.js'
 import YAML from 'yaml'
 
-const cfgDir = path.join(pluginPath, 'config')
+const cfgDir = path.join(paths.pluginPath, 'config')
 const cfgFilePath = path.join(cfgDir, 'cfg.yaml')
 const defaultFilePath = path.join(cfgDir, 'default.yaml')
 
