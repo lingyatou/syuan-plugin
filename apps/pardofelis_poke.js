@@ -12,7 +12,7 @@ import YAML from 'yaml'
 let api = {}
 
 try {
-    const a = await fs.readFile(path.join(paths.rootResourcesPath, 'syuan', 'secret.yaml'), 'utf8');
+    const a = await fs.readFile(path.join(paths.rootResourcesPath, 'secret.yaml'), 'utf8');
     api = YAML.parse(a);
 } catch (err) {
     logger.error('读取文件失败:', err);
