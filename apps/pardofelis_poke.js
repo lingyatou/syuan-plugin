@@ -12,7 +12,7 @@ import YAML from 'yaml'
 let api = {}
 
 try {
-    const a = await fs.readFile(path.join(paths.rootResourcesPath, 'resources', 'syuan', 'secret.yaml'), 'utf8');
+    const a = await fs.readFile(path.join(paths.rootResourcesPath, 'syuan', 'secret.yaml'), 'utf8');
     api = YAML.parse(a);
 } catch (err) {
     logger.error('读取文件失败:', err);
@@ -61,7 +61,7 @@ const mood = [
 ]
 
 const napcatUrl = "http://127.0.0.1:3000"
-const url = path.join(pluginPath, 'resources', 'poke')
+const url = path.join(paths.pluginResourcesPath, 'poke')
 const pokeUrl = path.join(url, 'poke')
 const angryUrl = path.join(url, 'angry')
 const arronganceUrl = path.join(url, 'arrogance')

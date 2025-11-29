@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { pluginPath, paths, cfgdata, isMaster } from '../tools/index.js'
+import { paths, cfgdata, isMaster } from '../tools/index.js'
 import YAML from 'yaml'
 
 // 加载配置数据

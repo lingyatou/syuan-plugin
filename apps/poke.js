@@ -1,5 +1,5 @@
 import NapCatAPI from "../tools/napcat-http.js"
-import { NAPCAT_HTTP_223, NAPCAT_HTTP_304, sleep, rootPath } from "../tools/index.js"
+import { NAPCAT_HTTP_223, NAPCAT_HTTP_304, sleep,paths } from "../tools/index.js"
 
 import axios from "axios";
 import fs from 'fs'
@@ -13,7 +13,7 @@ function which(uid) {
     }
 }
 
-const urlsFile = path.join(rootPath, "data/Syuan-plugin/emoji_raw_urls.txt")
+const urlsFile = path.join(paths.rootDataPath, "emoji_raw_urls.txt")
 
 
 export class poke_to_2YM extends plugin {
@@ -39,7 +39,7 @@ export class poke_to_2YM extends plugin {
         if (e.operator_id == e.self_id) return false
 
         // 表情包目录：data/Syuan-plugin/Yunzai_image/2YM
-        const emojiDir = path.join(rootPath, 'data/Syuan-plugin/Yunzai_image/2YM')
+        const emojiDir = path.join(paths.rootDataPath, 'Yunzai_image/2YM')
         const files = fs.readdirSync(emojiDir).filter(file => /\.(jpg|png|gif)$/i.test(file))
         if (files.length === 0) {
             logger.warn('[SyuanPokeReply] 2毛目录为空')
@@ -71,7 +71,7 @@ export class poke_to_2YM extends plugin {
 
 
 function update() {
-    const targetPath = path.join(rootPath, 'data', 'Syuan-plugin', 'Yunzai_image');
+    const targetPath = path.join(paths.rootDataPath, 'Yunzai_image');
     // 执行 git pull
     exec('git pull', { cwd: targetPath }, (error, stdout, stderr) => {
         if (error) {
