@@ -1,10 +1,10 @@
-import { versionInfo, pluginPath } from './tools/index.js'
+import { versionInfo, paths } from './tools/index.js'
 
 import path from 'path'
 
 import fs from 'node:fs'
 
-const appsPath = path.join(pluginPath, 'apps')
+const appsPath = path.join(paths.pluginPath, 'apps')
 
 if (!global.segment) {
     global.segment = (await import("oicq")).segment
