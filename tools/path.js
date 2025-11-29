@@ -32,6 +32,17 @@ const paths = {
   pluginDataPath,
   pluginResourcesPath
 }
+// 导出命名和默认（兼容旧引用）
+export {
+  pluginPath,
+  rootPath,
+  rootDataPath,
+  rootResourcesPath,
+  pluginDataPath,
+  pluginResourcesPath,
+  paths
+}
+
 
 // 默认导出
 export default paths
