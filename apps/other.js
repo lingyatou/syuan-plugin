@@ -1,12 +1,12 @@
 import fs from 'fs'
 import path from 'path'
-import { pluginPath, dataPath, cfgdata, isMaster } from '../tools/index.js'
+import { pluginPath, paths, cfgdata, isMaster } from '../tools/index.js'
 import YAML from 'yaml'
 
 // 加载配置数据
 const cfgData = cfgdata.loadCfg()
 // 构建欢迎词文件路径
-const filePath = path.join(dataPath, 'welcome.json')
+const filePath = path.join(paths.rootDataPath, 'welcome.json')
 let groupId;
 
 export class welcome extends plugin {
@@ -145,7 +145,7 @@ export class welcome extends plugin {
 
     async getHelp(e) {
         // 读取 yaml 文件
-        const yamlPath = path.join(pluginPath, 'resources', 'help', 'help.yaml')
+        const yamlPath = path.join(paths.pluginResourcesPath, 'help', 'help.yaml')
         if (!fs.existsSync(yamlPath)) {
             return e.reply("❌[Syuan-plugin] 找不到 帮助配置 文件");
         }

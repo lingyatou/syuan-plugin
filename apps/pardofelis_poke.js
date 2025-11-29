@@ -1,4 +1,4 @@
-import { isMaster, NapCatAPI, pluginPath, rootPath } from '../tools/index.js'
+import { isMaster, NapCatAPI, paths } from '../tools/index.js'
 import common from '../../../lib/common/common.js'
 import moment from "moment";
 import cfg from '../../../lib/config/config.js'
@@ -12,7 +12,7 @@ import YAML from 'yaml'
 let api = {}
 
 try {
-    const a = await fs.readFile(path.join(rootPath, 'resources', 'syuan', 'secret.yaml'), 'utf8');
+    const a = await fs.readFile(path.join(paths.rootResourcesPath, 'resources', 'syuan', 'secret.yaml'), 'utf8');
     api = YAML.parse(a);
 } catch (err) {
     logger.error('读取文件失败:', err);
@@ -36,7 +36,7 @@ let mutetime = 0 //禁言时间设置，单位分钟，如果设置0则为自动
 const botIds = [2239841632, 3210532108]
 
 let data = {}
-const dataurl = path.join(pluginPath, 'data', 'poke.yaml')
+const dataurl = path.join(paths.pluginDataPath,  'poke.yaml')
 try {
     const f = await fs.readFile(dataurl, 'utf8');
     data = YAML.parse(f);

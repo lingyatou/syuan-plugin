@@ -9,11 +9,29 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// miao-plugin根路径
+// plugin根路径
 const pluginPath = path.join(__dirname, '..')
 // yunzai根路径
 const rootPath = path.join(pluginPath, '..', '..')
+// yunzai的data路径
+const rootDataPath = path.join(rootPath, 'data', 'syuan')
 
-const dataPath = path.join(rootPath, 'data', 'syuan')
+// yunzai的资源路径
+const rootResourcesPath = path.join(rootPath, 'resources', 'syuan')
 
-export { pluginPath, rootPath, dataPath }
+// syuan-plugin的data路径
+const pluginDataPath = path.join(pluginPath, 'data')
+// syuan-plugin的resource路径
+const pluginResourcesPath = path.join(pluginPath, 'resources')
+
+const paths = {
+  pluginPath,
+  rootPath,
+  rootDataPath,
+  rootResourcesPath,
+  pluginDataPath,
+  pluginResourcesPath
+}
+
+// 默认导出
+export default paths

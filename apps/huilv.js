@@ -1,4 +1,4 @@
-import { cfgdata, dataPath, searchWiki, loadData } from "../tools/index.js"
+import { cfgdata, paths, searchWiki, loadData } from "../tools/index.js"
 import OpenAI from "openai"
 import path from 'path'
 import fs from 'fs'
@@ -10,7 +10,7 @@ let ys = {}
 let usrKnowlegde = false
 let index = config.Chat.index || 1
 
-const presetDir = path.join(dataPath, '预设')
+const presetDir = path.join(paths.rootDataPath, '预设')
 
 // 自动读取 “预设” 文件夹下所有 txt 文件
 function loadPresetList() {
@@ -68,7 +68,7 @@ export class gpt extends plugin {
         if (!initChat(e)) return true
 
         if (!messages) {
-            let file = path.join(dataPath, presetFiles[index])
+            let file = path.join(paths.rootDataPath, presetFiles[index])
             if (fs.existsSync(file)) {
                 messages = JSON.parse(fs.readFileSync(file, 'utf8'))
             } else {
@@ -105,7 +105,7 @@ export class gpt extends plugin {
     async rm(e) {
         if (String(e.user_id) != '2331329306') return false
         messages = null
-        let file = path.join(dataPath, presetFiles[index])
+        let file = path.join(paths.rootDataPath, presetFiles[index])
         if (fs.existsSync(file)) {
             fs.unlinkSync(file)
         }
@@ -142,7 +142,7 @@ export class gpt extends plugin {
         config.Chat.index = newIndex
         cfgdata.saveCfg(config)
 
-        let file = path.join(dataPath, presetFiles[index])
+        let file = path.join(paths.rootDataPath, presetFiles[index])
         if (fs.existsSync(file)) {
             messages = JSON.parse(fs.readFileSync(file, 'utf8'))
         } else {
@@ -191,7 +191,7 @@ function initChat(e) {
 function update() {
     if (messages) {
         try {
-            let file = path.join(dataPath, presetFiles[index])
+            let file = path.join(paths.rootDataPath, presetFiles[index])
             fs.writeFileSync(
                 file,
                 JSON.stringify(messages, null, 2),

@@ -1,4 +1,4 @@
-import { dataPath, rootPath } from '../tools/index.js';
+import { paths } from '#paths';
 export class newcomer extends plugin {
     constructor() {
         super({
@@ -30,7 +30,7 @@ export class newcomer extends plugin {
         try {
             const fs = await import('fs');
             const path = await import('path');
-            const filePath = path.join(dataPath, 'welcome.json');
+            const filePath = path.join(paths.rootDataPath, 'welcome.json');
             if (fs.existsSync(filePath)) {
                 const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
                 if (data && data[this.e.group_id]) {

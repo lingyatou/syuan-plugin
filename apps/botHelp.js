@@ -1,4 +1,4 @@
-import { rootPath, pluginPath } from "../tools/index.js"
+import { paths } from "#paths"
 import path from 'path'
 import fs from 'fs'
 import yaml from 'yaml';
@@ -12,7 +12,7 @@ import cfg from '../../../lib/config/config.js'
  * 项目地址：https://gitee.com/T060925ZX/help-plugin
  */
 
-const file = path.join(pluginPath, `resources`, `BotHelp`, `html`, `help.html`)
+const file = path.join(paths.pluginResourcesPath,  `BotHelp`, `html`, `help.html`)
 const cfgyaml = path.join(pluginPath, 'config', 'BotHelp.yaml')
 
 
@@ -39,7 +39,7 @@ export class botHelp extends plugin {
         let { img } = await image({
             saveId: 'help',
             cwd: pluginPath,
-            genshinPath: `${pluginPath}/resources/BotHelp/`,
+            genshinPath: `${paths.pluginResourcesPath}/BotHelp/`,
             helpData: helpData,
             pluginPath: pluginPath
         });
