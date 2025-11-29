@@ -1,5 +1,5 @@
 import lodash from 'lodash'
-import { cfgdata, pluginPath } from "./tools/index.js"
+import { cfgdata,paths } from "./tools/index.js"
 import path from 'path'
 
 /**
@@ -22,7 +22,7 @@ export function supportGuoba() {
       link: 'https://github.com/lingyatou/syuan-plugin',
       isV3: true,
       description: '自用工具插件',
-      iconPath: path.join(pluginPath, 'resources', '1212.webp'),
+      iconPath: path.join(paths.pluginResourcesPath, '1212.webp'),
     },
 
     // 配置项信息
