@@ -5,7 +5,7 @@ import { exec } from 'child_process'
 export class Update extends plugin {
     constructor() {
         super({
-            name: '[Syuan-Plugin]更新',
+            name: '[syuan-plugin]更新',
             dsc: 'tools',
             event: 'message',
             priority: 10,
@@ -23,7 +23,7 @@ export class Update extends plugin {
     }
 
     async SyuanUpdate(e) {
-        e.reply('[Syuan-plugin] 开始更新插件，请稍等...')
+        e.reply('[syuan-plugin] 开始更新插件，请稍等...')
 
         exec(`git -C "${paths.pluginPath}" pull && cd "${paths.rootPath}" && pnpm i`, (err, stdout, stderr) => {
             if (err) {
@@ -43,7 +43,7 @@ export class Update extends plugin {
 
     async SyuanForceUpdate(e) {
         //使用pluginPath,在这个目录下进行git忽略本地改动更新
-        e.reply('[Syuan-plugin]开始强制更新插件，请稍等...')
+        e.reply('[syuan-plugin]开始强制更新插件，请稍等...')
         // 强制更新会丢失本地改动
         const cmd = `git -C "${paths.pluginPath}" reset --hard && git -C "${paths.pluginPath}" pull && cd "${paths.rootPath}" && pnpm i
 `

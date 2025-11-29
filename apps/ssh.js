@@ -4,7 +4,7 @@ import { sshData, isMaster } from '../tools/index.js'
 export class UpdateMemeRepos extends plugin {
     constructor() {
         super({
-            name: '[Syuan-Plugin]更新表情包',
+            name: '[syuan-plugin]更新表情包',
             dsc: '通过SSH密码连接远程服务器更新所有meme仓库并重启 systemd 服务',
             event: 'message',
             priority: 50,
@@ -17,7 +17,7 @@ export class UpdateMemeRepos extends plugin {
 
     async updateRepos(e) {
         if (!isMaster(e.self_id, e.user_id)) {
-            e.reply('[Syuan-plugin]表情服务更新：仅主人可用')
+            e.reply('[syuan-plugin]表情服务更新：仅主人可用')
             return
         }
         e.reply('正在连接远程服务器，请稍等...')

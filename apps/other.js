@@ -12,7 +12,7 @@ let groupId;
 export class welcome extends plugin {
     constructor() {
         super({
-            name: '[Syuan-Plugin]欢迎',
+            name: '[syuan-plugin]欢迎',
             dsc: '欢迎词相关',
             event: 'message',
             priority: 10,
@@ -147,14 +147,14 @@ export class welcome extends plugin {
         // 读取 yaml 文件
         const yamlPath = path.join(paths.pluginResourcesPath, 'help', 'help.yaml')
         if (!fs.existsSync(yamlPath)) {
-            return e.reply("❌[Syuan-plugin] 找不到 帮助配置 文件");
+            return e.reply("❌[syuan-plugin] 找不到 帮助配置 文件");
         }
 
         const yamlStr = fs.readFileSync(yamlPath, "utf8");
         const helpData = YAML.parse(yamlStr);
 
         if (!helpData || !helpData.helpList) {
-            return e.reply("❌[Syuan-plugin] 帮助配置 文件 格式错误或内容为空");
+            return e.reply("❌[syuan-plugin] 帮助配置 文件 格式错误或内容为空");
         }
 
         // 构造转发消息节点

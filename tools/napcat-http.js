@@ -34,7 +34,7 @@ const NapCatAPI = {
 
             return response.data;
         } catch (error) {
-            logger.error(`[Syuan-Plugin] 发送给 ${userId} 失败: ${error}`);
+            logger.error(`[syuan-plugin] 发送给 ${userId} 失败: ${error}`);
             throw error;
         }
     },

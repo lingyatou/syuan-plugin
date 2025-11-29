@@ -41,7 +41,7 @@ const { presets: presetNames, presetFiles } = loadPresetList()
 export class gpt extends plugin {
     constructor() {
         super({
-            name: '[Syuan-Plugin]al',
+            name: '[syuan-plugin]al',
             dsc: 'ai服务',
             event: 'message',
             priority: 50,

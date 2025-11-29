@@ -33,7 +33,7 @@ const thumbsUpMe_sum = 10
 export class Good extends plugin {
     constructor() {
         super({
-            name: '[Syuan-Plugin]点赞',
+            name: '[syuan-plugin]点赞',
             dsc: '可以定时点赞',
             event: 'message',
             priority: 500,
@@ -103,12 +103,12 @@ export class Good extends plugin {
             }
         }
 
-        e.reply('[Syuan-Plugin] 开始自动点赞任务')
+        e.reply('[syuan-plugin] 开始自动点赞任务')
         for (let qq of Object.keys(thumbsUpMelist)) {
             await NapCatAPI.thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
             await sleep(2000)
             //   await NapCatAPI.thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
-            logger.mark(`[Syuan-Plugin][自动点赞] 已给QQ${qq}点赞${thumbsUpMe_sum}次`)
+            logger.mark(`[syuan-plugin][自动点赞] 已给QQ${qq}点赞${thumbsUpMe_sum}次`)
             if (thumbsUpMelist[qq].push) {
                 NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_223, qq, thumbsUpMelist[qq].group, say)
                 await sleep(2000)
@@ -155,7 +155,7 @@ schedule.scheduleJob('00 00 10 * * *', async () => {
         await NapCatAPI.thumbsUp(NAPCAT_HTTP_223, qq, thumbsUpMe_sum)
         await sleep(2000)
         // await NapCatAPI.thumbsUp(NAPCAT_HTTP_304, qq, thumbsUpMe_sum)
-        logger.mark(`[Syuan-Plugin][自动点赞] 已给QQ${qq}点赞${thumbsUpMe_sum}次`)
+        logger.mark(`[syuan-plugin][自动点赞] 已给QQ${qq}点赞${thumbsUpMe_sum}次`)
         if (thumbsUpMelist[qq].push) {
             NapCatAPI.sendPrivateMsg(NAPCAT_HTTP_223, qq, thumbsUpMelist[qq].group, say)
             await sleep(2000)

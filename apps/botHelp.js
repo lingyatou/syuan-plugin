@@ -22,7 +22,7 @@ const helpData = yaml.parse(configData);
 export class botHelp extends plugin {
     constructor() {
         super({
-            name: '[Syuan-Plugin]Bot帮助',
+            name: '[syuan-plugin]Bot帮助',
             dsc: 'Bot总帮助',
             event: 'message',
             priority: -999999,
